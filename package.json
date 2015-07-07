@@ -1,0 +1,42 @@
+{
+  "name": "ol3-esri",
+  "version": "0.1.0",
+  "description": "Library to integrate OpenLayers 3 with Esri ArcGIS Server REST API",
+  "main": "index.js",
+  "scripts": {
+    "start": "watchify src/index.js -o dist/ol3-esri.js & st -nc",
+    "build": "browserify src/index.js -o dist/ol3-esri.js",
+    "test": "eslint src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bartvde/ol3-esri.git"
+  },
+  "keywords": [
+    "openlayers",
+    "esri",
+    "arcgis",
+    "rest"
+  ],
+  "author": "Boundless",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/bartvde/ol3-esri/issues"
+  },
+  "homepage": "https://github.com/bartvde/ol3-esri",
+  "dependencies": {
+    "openlayers": "^3.7.0"
+  },
+  "devDependencies": {
+    "babelify": "^6.0.2",
+    "browserify": "^9.0.8",
+    "st": "^0.5.3",
+    "watchify": "^3.2.0",
+    "eslint": "^0.22.1"
+  },
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  }
+}
