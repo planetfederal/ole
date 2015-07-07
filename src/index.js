@@ -1,4 +1,3 @@
-window.ol = require('openlayers');
 import LayerGenerator from './LayerGenerator.js';
 var config = {
   "id" : "9f5e8295946edd14",

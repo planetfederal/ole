@@ -24,9 +24,6 @@
     "url": "https://github.com/bartvde/ol3-esri/issues"
   },
   "homepage": "https://github.com/bartvde/ol3-esri",
-  "dependencies": {
-    "openlayers": "^3.7.0"
-  },
   "devDependencies": {
     "babelify": "^6.0.2",
     "browserify": "^9.0.8",
