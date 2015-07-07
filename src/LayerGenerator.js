@@ -1,3 +1,4 @@
+/* global ol */
 export default class LayerGenerator {
   constructor(props) {
     this._config = props.config;
@@ -5,6 +6,21 @@ export default class LayerGenerator {
     this._resolutions = this._getResolutions();
     this._projection = this._getProjection();
     this._attribution = this._getAttribution();
+    this._fullExtent = this._getFullExtent();
+  }
+  getFullExtent() {
+    return this._fullExtent;
+  }
+  _getFullExtent() {
+    return [
+      this._config.fullExtent.xmin,
+      this._config.fullExtent.ymin,
+      this._config.fullExtent.xmax,
+      this._config.fullExtent.ymax
+    ];
+  }
+  getResolutions() {
+    return this._resolutions;
   }
   _getResolutions() {
     var tileInfo = this._config.tileInfo;
@@ -22,6 +38,9 @@ export default class LayerGenerator {
     var projection = ol.proj.get(epsg) ? ol.proj.get(epsg) :
       new ol.proj.Projection({code: epsg, units: units});
     return projection;
+  }
+  getProjection() {
+    return this._projection;
   }
   _getAttribution() {
     return new ol.Attribution({
