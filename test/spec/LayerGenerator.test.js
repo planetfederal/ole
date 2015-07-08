@@ -5,7 +5,7 @@ describe('LayerGenerator', function() {
     beforeEach(function(done) {
       afterLoadJson('spec/data/ESRI_Imagery_World_2D.json', function(json) {
         var url = 'http://services.arcgisonline.com/arcgis/rest/services/ESRI_Imagery_World_2D/MapServer';
-        generator = new LayerGenerator({config: JSON.parse(json), url: url});
+        generator = new ol3Esri.LayerGenerator({config: JSON.parse(json), url: url});
         done();
       });
     });
@@ -28,7 +28,7 @@ describe('LayerGenerator', function() {
     beforeEach(function(done) {
       afterLoadJson('spec/data/ESRI_StateCityHighway_USA.json', function(json) {
         url = 'http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Specialty/ESRI_StateCityHighway_USA/MapServer';
-        generator = new LayerGenerator({config: JSON.parse(json), url: url});
+        generator = new ol3Esri.LayerGenerator({config: JSON.parse(json), url: url});
         done();
       });
     });
@@ -64,7 +64,7 @@ describe('LayerGenerator', function() {
         beforeEach(function(done) {
           afterLoadJson('spec/data/TMK1850.json', function(json) {
             var url = 'http://tiles.arcgis.com/tiles/nSZVuSZjHpEZZbRo/arcgis/rest/services/TMK1850/MapServer';
-            generator = new LayerGenerator({config: JSON.parse(json), url: url});
+            generator = new ol3Esri.LayerGenerator({config: JSON.parse(json), url: url});
             done();
           });
         });
