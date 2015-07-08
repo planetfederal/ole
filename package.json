@@ -6,7 +6,8 @@
   "scripts": {
     "start": "watchify src/index.js -o dist/ol3-esri.js & st -nc",
     "build": "browserify src/index.js -o dist/ol3-esri.js",
-    "test": "eslint src"
+    "lint": "eslint src",
+    "test": "phantomjs --ssl-protocol=any --ignore-ssl-errors=true ./node_modules/mocha-phantomjs/lib/mocha-phantomjs.coffee test/index.html"
   },
   "repository": {
     "type": "git",
@@ -29,7 +30,12 @@
     "browserify": "^9.0.8",
     "st": "^0.5.3",
     "watchify": "^3.2.0",
-    "eslint": "^0.22.1"
+    "expect.js": "0.3.1",
+    "eslint": "^0.22.1",
+    "mocha": "1.21.5",
+    "mocha-phantomjs": "3.5.1",
+    "openlayers": "^3.7.0",
+    "phantomjs": "1.9.10"
   },
   "browserify": {
     "transform": [

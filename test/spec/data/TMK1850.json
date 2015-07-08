@@ -1,0 +1,159 @@
+{
+  "id" : "9f5e8295946edd14",
+  "name" : "TMK1850",
+  "capabilities" : "Map,TilesOnly",
+  "description" : "De 62 bladen van de kaart verschenen tussen 1850 en 1864. De terreinopmetingen vonden echter al tussen 1844 en 1852 plaats. Officieren van de Dienst Militaire Verkenningen trokken te paard en vergezeld door een marechaussee het terrein in en vervaardigden daar 'veldminuten' op een schaal van 1 : 25.000. Deze werden in de winter verkleind tot 'nettekeningen' op een schaal van 1 : 50.000. Op basis daarvan werden door middel van steendruk de bladen van de TMK geproduceerd. De nettekeningen, die door hun kleurgebruik een fraai beeld geven van het landschap en de bebouwing in het midden van de 19e eeuw, zijn door Wolters-Noordhoff te Groningen als een uit vier delen bestaande atlas uitgegeven.<div><br /></div><div>De scans van de Topografische Militaire Kaart (zwart-wit, 1:50.000) worden in deze tiled mapservice aangeboden.</div>",
+  "serviceDescription" : "",
+  "server" : "nSZVuSZjHpEZZbRo",
+  "type" : "MapServer",
+  "access" : "SECURE",
+  "status" : "created",
+  "initialExtent" : {
+    "xmin" : -179782.23940435285,
+    "ymin" : 407899.60022909497,
+    "xmax" : 460990.23940435285,
+    "ymax" : 641318.0,
+    "spatialReference" : {
+      "wkid" : 28992,
+      "wkt" : null
+    }
+  },
+  "fullExtent" : {
+    "xmin" : -207.47158774361014,
+    "ymin" : 299606.2142068073,
+    "xmax" : 281364.2794480026,
+    "ymax" : 625025.5386816375,
+    "spatialReference" : {
+      "wkid" : 28992,
+      "wkt" : null
+    }
+  },
+  "spatialReference" : {
+    "wkid" : 28992,
+    "wkt" : null
+  },
+  "minScale" : 1.2288E7,
+  "maxScale" : 12000.0,
+  "singleFusedMapCache" : true,
+  "tileInfo" : {
+    "rows" : 256,
+    "cols" : 256,
+    "dpi" : 96,
+    "format" : "PNG24",
+    "compressionQuality" : 0,
+    "storageFormat" : "esriMapCacheStorageModeCompact",
+    "origin" : {
+      "x" : -285401.92,
+      "y" : 903401.92
+    },
+    "spatialReference" : {
+      "wkid" : 28992,
+      "wkt" : "PROJCS[\"RD_New\",GEOGCS[\"GCS_Amersfoort\",DATUM[\"D_Amersfoort\",SPHEROID[\"Bessel_1841\",6377397.155,299.1528128]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]],PROJECTION[\"Double_Stereographic\"],PARAMETER[\"False_Easting\",155000.0],PARAMETER[\"False_Northing\",463000.0],PARAMETER[\"Central_Meridian\",5.38763888888889],PARAMETER[\"Scale_Factor\",0.9999079],PARAMETER[\"Latitude_Of_Origin\",52.15616055555555],UNIT[\"Meter\",1.0],AUTHORITY[\"EPSG\",28992]]"
+    },
+    "lods" : [ {
+      "level" : 0,
+      "resolution" : 3251.206502413005,
+      "scale" : 1.2288E7
+    }, {
+      "level" : 1,
+      "resolution" : 1625.6032512065026,
+      "scale" : 6144000.0
+    }, {
+      "level" : 2,
+      "resolution" : 812.8016256032513,
+      "scale" : 3072000.0
+    }, {
+      "level" : 3,
+      "resolution" : 406.40081280162565,
+      "scale" : 1536000.0
+    }, {
+      "level" : 4,
+      "resolution" : 203.20040640081282,
+      "scale" : 768000.0
+    }, {
+      "level" : 5,
+      "resolution" : 101.60020320040641,
+      "scale" : 384000.0
+    }, {
+      "level" : 6,
+      "resolution" : 50.800101600203206,
+      "scale" : 192000.0
+    }, {
+      "level" : 7,
+      "resolution" : 25.400050800101603,
+      "scale" : 96000.0
+    }, {
+      "level" : 8,
+      "resolution" : 12.700025400050801,
+      "scale" : 48000.0
+    }, {
+      "level" : 9,
+      "resolution" : 6.350012700025401,
+      "scale" : 24000.0
+    }, {
+      "level" : 10,
+      "resolution" : 3.1750063500127004,
+      "scale" : 12000.0
+    } ]
+  },
+  "documentInfo" : {
+    "title" : "TMK 1850 (zwart-wit)",
+    "author" : "Esri_NL_Content",
+    "comments" : "",
+    "subject" : "Gedrukte zwart-wit kaart van de Topografische en Militaire Kaart op een schaal van 1 : 50.000, bestrijkt het gehele grondgebied van Nederland.",
+    "category" : "",
+    "keywords" : "TMK, 1850, TMK1850, Historisch, History, Kadaster, Topografie, Topografisch, Militair, Militaire, Kaart, NL, NLD, Netherlands, Nederland, Topographic, basemap, historical",
+    "credits" : "Kadaster",
+    "Title" : "",
+    "Author" : "",
+    "Comments" : "",
+    "Subject" : "",
+    "Category" : "",
+    "AntialiasingMode" : "None",
+    "TextAntialiasingMode" : "Force",
+    "Keywords" : ""
+  },
+  "copyrightText" : "Kadaster",
+  "tileServers" : [ "http://tiles1.arcgis.com/tiles/nSZVuSZjHpEZZbRo/arcgis/rest/services/TMK1850/MapServer", "http://tiles2.arcgis.com/tiles/nSZVuSZjHpEZZbRo/arcgis/rest/services/TMK1850/MapServer", "http://tiles3.arcgis.com/tiles/nSZVuSZjHpEZZbRo/arcgis/rest/services/TMK1850/MapServer", "http://tiles4.arcgis.com/tiles/nSZVuSZjHpEZZbRo/arcgis/rest/services/TMK1850/MapServer" ],
+  "maxExportTilesCount" : 100000,
+  "exportTilesAllowed" : false,
+  "mapName" : "Layers",
+  "units" : "esriMeters",
+  "supportedImageFormatTypes" : "PNG24",
+  "layers" : [ {
+    "id" : 0,
+    "name" : "TMK1850",
+    "parentLayerId" : -1,
+    "defaultVisibility" : true,
+    "subLayerIds" : [ 1, 2, 3 ],
+    "minScale" : 0,
+    "maxScale" : 0
+  }, {
+    "id" : 1,
+    "name" : "Boundary",
+    "parentLayerId" : 0,
+    "defaultVisibility" : false,
+    "subLayerIds" : null,
+    "minScale" : 0,
+    "maxScale" : 0
+  }, {
+    "id" : 2,
+    "name" : "Footprint",
+    "parentLayerId" : 0,
+    "defaultVisibility" : false,
+    "subLayerIds" : null,
+    "minScale" : 0,
+    "maxScale" : 0
+  }, {
+    "id" : 3,
+    "name" : "Image",
+    "parentLayerId" : 0,
+    "defaultVisibility" : true,
+    "subLayerIds" : null,
+    "minScale" : 0,
+    "maxScale" : 0
+  } ],
+  "tables" : [ ],
+  "resampling" : false,
+  "currentVersion" : 10.31
+}

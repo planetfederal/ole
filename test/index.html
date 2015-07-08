@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ol3-esri Spec Runner</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="../node_modules/mocha/mocha.css">
+  <link rel="stylesheet" type="text/css" href="../node_modules/openlayers/dist/ol.css">
+</head>
+<body>
+  <div id="mocha"></div>
+  <script src="../node_modules/expect.js/index.js"></script>
+  <script src="../node_modules/mocha/mocha.js"></script>
+  <script src="../node_modules/openlayers/dist/ol.js"></script>
+  <script src="../dist/ol3-esri.js"></script>
+  <script>
+    mocha.setup({
+      ui: 'bdd',
+      bail: false
+    });
+  </script>
+  <script src="test-extensions.js"></script>
+  <script src="./test-helper-functions.js"></script>
+  <script src="./load-tests.js"></script>
+  <script>
+
+    if (window.mochaPhantomJS) {
+      mochaPhantomJS.run();
+    } else {
+      var runner = mocha.run();
+      if (window.console && console.log) {
+        // write stacks to the console for failed tests
+        runner.on('fail', function(test, err) {
+          if (test.duration > test._timeout) {
+            var titles = [];
+            for (var p = test; p; p = p.parent) {
+              if (p.title) {
+                titles.unshift(p.title);
+              }
+            }
+            console.log('Test timed out:', titles.join(' > '));
+          }
+          console.error(test.err.stack);
+        });
+      }
+    }
+  </script>
+  <!--
+    Tests should not depend on any specific markup and should instead create
+    whatever elements are needed (cleaning up when done).
+  -->
+</body>
+</html>
