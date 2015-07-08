@@ -1,0 +1,73 @@
+{
+  "currentVersion" : 10.01, 
+  "serviceDescription" : "This service provides census information for U.S. cities and states including total population, racial counts, and more. It also includes highways. This is a sample service hosted by ESRI, powered by ArcGIS Server. ESRI has provided this example so that you may practice using ArcGIS APIs for JavaScript, Flex, and Silverlight. ESRI reserves the right to change or remove this service at any time and without notice.", 
+  "mapName" : "Layers", 
+  "description" : "This service provides census information for U.S. cities and states including total population, racial counts, and more. It also includes highways. ", 
+  "copyrightText" : "(c) ESRI and its data partners", 
+  "layers" : [
+    {
+      "id" : 0, 
+      "name" : "ushigh", 
+      "parentLayerId" : -1, 
+      "defaultVisibility" : true, 
+      "subLayerIds" : null, 
+      "minScale" : 0, 
+      "maxScale" : 0
+    }, 
+    {
+      "id" : 1, 
+      "name" : "states", 
+      "parentLayerId" : -1, 
+      "defaultVisibility" : true, 
+      "subLayerIds" : null, 
+      "minScale" : 0, 
+      "maxScale" : 0
+    }, 
+    {
+      "id" : 2, 
+      "name" : "counties", 
+      "parentLayerId" : -1, 
+      "defaultVisibility" : true, 
+      "subLayerIds" : null, 
+      "minScale" : 0, 
+      "maxScale" : 0
+    }
+  ], 
+  "tables" : [
+    
+  ], 
+  "spatialReference" : {
+    "wkid" : 4326
+  }, 
+  "singleFusedMapCache" : false, 
+  "initialExtent" : {
+    "xmin" : -133.32040574214, 
+    "ymin" : 0.39958686846267, 
+    "xmax" : -58.1280793754844, 
+    "ymax" : 75.5919132351182, 
+    "spatialReference" : {
+      "wkid" : 4326
+    }
+  }, 
+  "fullExtent" : {
+    "xmin" : -183.780014728684, 
+    "ymin" : 16.3007091216188, 
+    "xmax" : -61.4068546696842, 
+    "ymax" : 74.0303080309689, 
+    "spatialReference" : {
+      "wkid" : 4326
+    }
+  }, 
+  "units" : "esriDecimalDegrees", 
+  "supportedImageFormatTypes" : "PNG24,PNG,JPG,DIB,TIFF,EMF,PS,PDF,GIF,SVG,SVGZ,AI,BMP", 
+  "documentInfo" : {
+    "Title" : "USA_Data", 
+    "Author" : "andy", 
+    "Comments" : "", 
+    "Subject" : "", 
+    "Category" : "", 
+    "Keywords" : "", 
+    "Credits" : ""
+  }, 
+  "capabilities" : "Map,Query,Data"
+}

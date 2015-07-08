@@ -100,7 +100,6 @@ export default class LayerGenerator {
     return new ol.source.XYZ({
       attributions: [this._attribution],
       projection: this._projection,
-      extent: extent,
       tileSize: tileSize,
       tileGrid: tileGrid,
       tileUrlFunction: tileUrlFunction,

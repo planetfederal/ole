@@ -1,0 +1,163 @@
+{
+ "currentVersion": 10.3,
+ "serviceDescription": "This map is in <a href=\"http://links.esri.com/agol_lifecycle \" target=\"_new\" >Extended Support<\/a> and is no longer updated. Esri recommends that you use <a href=\"http://goto.arcgisonline.com/maps/World_Imagery \" target=\"_new\" >World_Imagery<\/a> instead (ArcGIS 9.3 or higher is required).",
+ "mapName": "Layers",
+ "description": "This map presents low-resolution imagery for the world and high-resolution imagery for the United States and other metropolitan areas around the world. The map includes NASA Blue Marble: Next Generation 500m resolution imagery at small scales (above 1:1,000,000), i-cubed 15m eSAT imagery at medium-to-large scales (down to 1:70,000) for the world, and USGS 15m Landsat imagery for Antarctica.  It also includes 1m i-cubed Nationwide Select imagery for the continental United States, and GeoEye IKONOS 1m resolution imagery for Hawaii, parts of Alaska, and several hundred metropolitan areas around the world. For more information on this map, including our terms of use, visit us online at http://goto.arcgisonline.com/maps/ESRI_Imagery_World_2D",
+ "copyrightText": "Copyright:Â© 2013 ESRI, i-cubed, GeoEye",
+ "supportsDynamicLayers": false,
+ "layers": [
+  {
+   "id": 0,
+   "name": "World Imagery",
+   "parentLayerId": -1,
+   "defaultVisibility": true,
+   "subLayerIds": null,
+   "minScale": 0,
+   "maxScale": 0
+  }
+ ],
+ "tables": [],
+ "spatialReference": {
+  "wkid": 4326,
+  "latestWkid": 4326
+ },
+ "singleFusedMapCache": true,
+ "tileInfo": {
+  "rows": 512,
+  "cols": 512,
+  "dpi": 96,
+  "format": "JPEG",
+  "compressionQuality": 75,
+  "origin": {
+   "x": -180,
+   "y": 90
+  },
+  "spatialReference": {
+   "wkid": 4326,
+   "latestWkid": 4326
+  },
+  "lods": [
+   {
+    "level": 0,
+    "resolution": 0.3515625,
+    "scale": 1.47748799285417E8
+   },
+   {
+    "level": 1,
+    "resolution": 0.17578125,
+    "scale": 7.38743996427087E7
+   },
+   {
+    "level": 2,
+    "resolution": 0.087890625,
+    "scale": 3.69371998213544E7
+   },
+   {
+    "level": 3,
+    "resolution": 0.0439453125,
+    "scale": 1.84685999106772E7
+   },
+   {
+    "level": 4,
+    "resolution": 0.02197265625,
+    "scale": 9234299.95533859
+   },
+   {
+    "level": 5,
+    "resolution": 0.010986328125,
+    "scale": 4617149.97766929
+   },
+   {
+    "level": 6,
+    "resolution": 0.0054931640625,
+    "scale": 2308574.98883465
+   },
+   {
+    "level": 7,
+    "resolution": 0.00274658203125,
+    "scale": 1154287.49441732
+   },
+   {
+    "level": 8,
+    "resolution": 0.001373291015625,
+    "scale": 577143.747208662
+   },
+   {
+    "level": 9,
+    "resolution": 6.866455078125E-4,
+    "scale": 288571.873604331
+   },
+   {
+    "level": 10,
+    "resolution": 3.4332275390625E-4,
+    "scale": 144285.936802165
+   },
+   {
+    "level": 11,
+    "resolution": 1.71661376953125E-4,
+    "scale": 72142.9684010827
+   },
+   {
+    "level": 12,
+    "resolution": 8.58306884765629E-5,
+    "scale": 36071.4842005414
+   },
+   {
+    "level": 13,
+    "resolution": 4.29153442382814E-5,
+    "scale": 18035.7421002707
+   },
+   {
+    "level": 14,
+    "resolution": 2.14576721191407E-5,
+    "scale": 9017.87105013534
+   },
+   {
+    "level": 15,
+    "resolution": 1.07288360595703E-5,
+    "scale": 4508.93552506767
+   }
+  ]
+ },
+ "initialExtent": {
+  "xmin": -179.999999,
+  "ymin": -89.999999,
+  "xmax": 179.999999,
+  "ymax": 89.999999,
+  "spatialReference": {
+   "cs": "gcs",
+   "wkid": 4326
+  }
+ },
+ "fullExtent": {
+  "xmin": -179.999999,
+  "ymin": -89.999999,
+  "xmax": 179.999999,
+  "ymax": 89.999999,
+  "spatialReference": {
+   "cs": "gcs",
+   "wkid": 4326
+  }
+ },
+ "minScale": 1.47748799285417E8,
+ "maxScale": 4508.93552506767,
+ "units": "esriDecimalDegrees",
+ "supportedImageFormatTypes": "PNG32,PNG24,PNG,JPG,DIB,TIFF,EMF,PS,PDF,GIF,SVG,SVGZ,BMP",
+ "documentInfo": {
+  "Title": "World Imagery",
+  "Author": "ESRI",
+  "Comments": "",
+  "Subject": " imagery, satellite, aerial, 500m (World), 15m (World), 15m (Antarctica), 1m (World Cities), 1m (United States), CONUS, IKONOS",
+  "Category": "imageryBaseMapsEarthCover (Imagery, basemaps, and land cover)",
+  "AntialiasingMode": "None",
+  "TextAntialiasingMode": "Force",
+  "Keywords": "World,Global,United States,Antarctica 2009"
+ },
+ "capabilities": "Map,Tilemap,Query,Data",
+ "supportedQueryFormats": "JSON, AMF",
+ "exportTilesAllowed": false,
+ "maxRecordCount": 1000,
+ "maxImageHeight": 4096,
+ "maxImageWidth": 4096,
+ "supportedExtensions": "KmlServer"
+}
