@@ -4,7 +4,7 @@ Intgeration with OpenLayers 3 and Esri ArcGIS REST services.
 
 ## Getting started
     npm install
-    npm build
+    npm run build
 
 ## Unit tests
     npm start
