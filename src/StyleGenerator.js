@@ -2,23 +2,23 @@
 export default class StyleGenerator {
   constructor() {
     this._converters = {};
-    this._converters.esriPMS = this._convertEsriPMS;
-    this._converters.esriSFS = this._convertEsriSFS;
-    this._converters.esriSMS = this._convertEsriSMS;
+    this._converters.esriPMS = StyleGenerator._convertEsriPMS;
+    this._converters.esriSFS = StyleGenerator._convertEsriSFS;
+    this._converters.esriSMS = StyleGenerator._convertEsriSMS;
     this._renderers = {};
     this._renderers.uniqueValue = this._renderUniqueValue;
     this._renderers.simple = this._renderSimple;
     this._renderers.classBreaks = this._renderClassBreaks;
   }
-  _convertPointToPixel(point) {
+  static _convertPointToPixel(point) {
     return Math.ceil(point / 0.75);
   }
-  _transformColor(color) {
+  static _transformColor(color) {
     // alpha channel is different, runs from 0-255 but in ol3 from 0-1
     return [color[0], color[1], color[2], color[3] / 255];
   }
   /* convert an Esri Picture Marker Symbol */
-  _convertEsriPMS(symbol) {
+  static _convertEsriPMS(symbol) {
     var width = StyleGenerator._convertPointToPixel(symbol.width);
     var img = document.createElement('img');
     img.src = 'data:' + symbol.contentType + ';base64, ' + symbol.imageData;
@@ -31,12 +31,12 @@ export default class StyleGenerator {
     });
   }
   /* convert an Esri Simple Fill Symbol */
-  _convertEsriSFS(symbol) {
+  static _convertEsriSFS(symbol) {
     var fill = new ol.style.Fill({
-      color: this._transformColor(symbol.color)
+      color: StyleGenerator._transformColor(symbol.color)
     });
     var stroke = new ol.style.Stroke({
-      color: this._transformColor(symbol.outline.color)
+      color: StyleGenerator._transformColor(symbol.outline.color)
     });
     return new ol.style.Style({
       fill: fill,
@@ -44,16 +44,16 @@ export default class StyleGenerator {
     });
   }
   /* convert an Esri Simple Marker Symbol */
-  _convertEsriSMS(symbol, optSize) {
+  static _convertEsriSMS(symbol, optSize) {
     if (symbol.style === 'esriSMSCircle') {
       // TODO implement outline style (e.g. "esriSLSSolid")
       var circle = new ol.style.Circle({
         radius: optSize ? optSize : symbol.size,
         fill: new ol.style.Fill({
-          color: this._transformColor(symbol.color)
+          color: StyleGenerator._transformColor(symbol.color)
         }),
         stroke: new ol.style.Stroke({
-          color: this._transformColor(symbol.outline.color),
+          color: StyleGenerator._transformColor(symbol.outline.color),
           width: symbol.outline.width
         })
       });
@@ -75,7 +75,7 @@ export default class StyleGenerator {
     var size = minSize;
     var symbol = renderer.classBreakInfos[0].symbol;
     while (size <= maxSize) {
-      sizes.push(this._convertPointToPixel(size));
+      sizes.push(StyleGenerator._convertPointToPixel(size));
       size += minSize;
     }
     var classes = [];
