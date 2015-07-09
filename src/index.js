@@ -1,6 +1,8 @@
-import LayerGenerator from './LayerGenerator.js';
-import StyleGenerator from './StyleGenerator.js';
+import LayerGenerator from './LayerGenerator';
+import StyleGenerator from './StyleGenerator';
+import VectorLayerModifier from './VectorLayerModifier';
 module.exports = {
   LayerGenerator: LayerGenerator,
-  StyleGenerator: StyleGenerator
+  StyleGenerator: StyleGenerator,
+  VectorLayerModifier: VectorLayerModifier
 };

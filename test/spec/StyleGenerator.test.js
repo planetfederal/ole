@@ -61,9 +61,7 @@ describe('StyleGenerator', function() {
       expect(style).to.be.a(ol.style.Style);
       var image = style.getImage();
       expect(image).to.be.a(ol.style.Icon);
-      expect(image.getSrc()).to.be('data:' + drawingInfo.renderer.symbol.contentType+';base64, ' + drawingInfo.renderer.symbol.imageData);
-      expect(image.getSize()).to.eql([64, 64]);
-      expect(image.getScale()).to.be(20/64);
+      expect(image.getSrc().split(',')[1].trim().replace('%20', '')).to.be(drawingInfo.renderer.symbol.imageData);
     });
   });
 
