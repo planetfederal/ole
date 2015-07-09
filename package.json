@@ -4,7 +4,7 @@
   "description": "Library to integrate OpenLayers 3 with Esri ArcGIS Server REST API",
   "main": "index.js",
   "scripts": {
-    "start": "watchify src/index.js -o dist/ol3-esri.js & st -nc",
+    "start": "watchify src/index.js --standalone ol3Esri -o dist/ol3-esri.js & st -nc",
     "build": "browserify src/index.js --standalone ol3Esri -o dist/ol3-esri.js",
     "lint": "eslint src",
     "test": "phantomjs --ssl-protocol=any --ignore-ssl-errors=true ./node_modules/mocha-phantomjs/lib/mocha-phantomjs.coffee test/index.html"
