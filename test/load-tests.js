@@ -1,7 +1,8 @@
 ;(function(doc, global){
     var specPath = './spec/',
         dependencies = [
-            'LayerGenerator.test.js'
+            'LayerGenerator.test.js',
+            'StyleGenerator.test.js'
         ],
         getScriptTag = global.TestUtil.getExternalScriptTag,
         dependencyCnt = dependencies.length,
