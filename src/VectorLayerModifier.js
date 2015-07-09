@@ -12,7 +12,7 @@ export default class VectorLayerModifier {
       var maxResolution = parseFloat(layerInfo.minScale) / (mpu * inchesPerMeter * dpi);
       layer.setMaxResolution(maxResolution);
     }
-    if (layer.maxScale) {
+    if (layerInfo.maxScale) {
       var minResolution = parseFloat(layerInfo.maxScale) / (mpu * inchesPerMeter * dpi);
       layer.setMinResolution(minResolution);
     }
