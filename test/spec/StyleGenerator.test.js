@@ -41,4 +41,30 @@ describe('StyleGenerator', function() {
     });
   });
 
+  // http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/affordable_housing/FeatureServer
+  describe('generates correct style (affordable_housing)', function(){
+    var style, drawingInfo;
+    beforeEach(function(done) {
+      afterLoadJson('spec/data/affordable_housing.json', function(json) {
+        var generator = new ol3Esri.StyleGenerator();
+        drawingInfo = JSON.parse(json).drawingInfo;
+        style = generator.generateStyle(drawingInfo);
+        done();
+      });
+    });
+    it('generates correct classes', function() {
+      // simple renderer
+      // esriPMS symbol
+      // size 15 points, 20 pixels
+      // image width is 64x64
+      // scale = 20/64
+      expect(style).to.be.a(ol.style.Style);
+      var image = style.getImage();
+      expect(image).to.be.a(ol.style.Icon);
+      expect(image.getSrc()).to.be('data:' + drawingInfo.renderer.symbol.contentType+';base64, ' + drawingInfo.renderer.symbol.imageData);
+      expect(image.getSize()).to.eql([64, 64]);
+      expect(image.getScale()).to.be(20/64);
+    });
+  });
+
 });
