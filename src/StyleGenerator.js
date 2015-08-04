@@ -72,7 +72,7 @@ export default class StyleGenerator {
       color: StyleGenerator._transformColor(symbol.color)
     });
     var stroke = StyleGenerator._convertOutline(symbol.outline);
-    var radius = optSize ? optSize : symbol.size;
+    var radius = optSize ? optSize : StyleGenerator._convertPointToPixel(symbol.size)/2;
     if (symbol.style === 'esriSMSCircle') {
       return new ol.style.Style({
         image: new ol.style.Circle({
@@ -81,7 +81,7 @@ export default class StyleGenerator {
           stroke: stroke 
         })
       });
-    } else if (symbol.type === 'esriSMSCross') {
+    } else if (symbol.style === 'esriSMSCross') {
       return new ol.style.Style({
         image: new ol.style.RegularShape({
           fill: fill,
@@ -92,7 +92,7 @@ export default class StyleGenerator {
           angle: 0
         })
       });
-    } else if (symbol.type === 'esriSMSDiamond') {
+    } else if (symbol.style === 'esriSMSDiamond') {
       return new ol.style.Style({
         image: new ol.style.RegularShape({
           fill: fill,
@@ -101,7 +101,7 @@ export default class StyleGenerator {
           radius: radius
         })
       });
-    } else if (symbol.type === 'esriSMSSquare') {
+    } else if (symbol.style === 'esriSMSSquare') {
       return new ol.style.Style({
         image: new ol.style.RegularShape({
           fill: fill,   
@@ -111,7 +111,7 @@ export default class StyleGenerator {
           angle: Math.PI / 4
         })
       });
-    } else if (symbol.type === 'esriSMSX') {
+    } else if (symbol.style === 'esriSMSX') {
       return new ol.style.Style({
         image: new ol.style.RegularShape({
           fill: fill,
@@ -122,7 +122,7 @@ export default class StyleGenerator {
           angle: Math.PI / 4
         })
       });
-    } else if (symbol.type === 'esriSMSTriangle') {
+    } else if (symbol.style === 'esriSMSTriangle') {
       return new ol.style.Style({
         image: new ol.style.RegularShape({
           fill: fill,   

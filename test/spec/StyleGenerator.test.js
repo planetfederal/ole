@@ -55,6 +55,35 @@ describe('StyleGenerator', function() {
     });
   });
 
+  describe('#convertEsriSMS', function() {
+    it('converts simple marker symbol', function() {
+      var symbol = {
+        "type": "esriSMS",
+        "style": "esriSMSSquare",
+        "color": [76,115,0,255],
+        "size": 8,
+        "angle": 0,
+        "xoffset": 0,
+        "yoffset": 0,
+        "outline": {
+          "color": [152,230,0,255],
+          "width": 1
+        }
+      };
+      var style = ol3Esri.StyleGenerator._convertEsriSMS(symbol);
+      var image = style.getImage();
+      var fill = image.getFill();
+      var stroke = image.getStroke();
+      expect(image).to.be.a(ol.style.RegularShape);
+      expect(fill.getColor()).to.eql([76,115,0,1]);
+      expect(stroke.getColor()).to.eql([152,230,0,1]);
+      expect(stroke.getWidth()).to.eql(1/0.75);
+      expect(image.getPoints()).to.be(4);
+      expect(image.getRadius()).to.be((8/0.75)/2);
+      expect(image.getAngle()).to.be(Math.PI / 4);
+    });
+  });
+
   // http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Aggregation%20of%20Trimet%20Transit%20Stops%20to%20Portland%20Neighborhoods/FeatureServer
   describe('generates correct style (Portland)', function(){
     var style;
