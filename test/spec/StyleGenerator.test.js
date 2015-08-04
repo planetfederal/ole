@@ -1,5 +1,60 @@
 describe('StyleGenerator', function() {
 
+  describe('#convertPointToPixel', function() {
+    it('converts points correctly to pixels', function() {
+      expect(ol3Esri.StyleGenerator._convertPointToPixel(17)).to.be(17/0.75);
+    });
+  });
+
+  describe('#transformColor', function() { 
+    it('converts color values correctly', function() { 
+      expect(ol3Esri.StyleGenerator._transformColor([255, 0, 0, 255])).to.eql([255, 0, 0, 1]);
+    });
+  });
+
+  describe('#convertEsriPMS', function() {
+    it('converts picture marker symbol correctly', function() {
+      var symbol = {
+        "type" : "esriPMS", 
+        "url" : "471E7E31", 
+        "imageData" : "iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAMNJREFUSIntlcENwyAMRZ+lSMyQFcI8rJA50jWyQuahKzCDT+6h0EuL1BA1iip8Qg/Ex99fYuCkGv5bKK0EcB40YgSE7bnTxsa58LeOnMd0QhwGXkxB3L0w0IDxPaMqpBFxjLMuaSVmRjurWIcRDHxaiWZuEbRcEhpZpSNhE9O81GiMN5E0ZRt2M0iVjshek8UkTQfZy8JqGHYP/rJhODD4T6wehtbB9zD0MPQwlOphaAxD/uPLK7Z8MB5gFet+WKcJPQDx29XkRhqr/AAAAABJRU5ErkJggg==", 
+        "contentType" : "image/png", 
+        "width" : 25, 
+        "height" : 25, 
+        "angle" : 0, 
+        "xoffset" : 0, 
+        "yoffset" : 0
+      };
+      var style = ol3Esri.StyleGenerator._convertEsriPMS(symbol);
+      var iconStyle = style.getImage();
+      expect(iconStyle.getSrc()).to.be('data:' + symbol.contentType + ';base64, ' + symbol.imageData);
+      expect(iconStyle.getScale()).to.be(1.3076923076923077);
+    });
+  });
+
+  describe('#convertEsriSFS', function() {
+    it('converts simple fill symbol correctly', function() {
+      var symbol = {
+        "type": "esriSFS",
+        "style": "esriSFSSolid",
+        "color": [115,76,0,255],
+        "outline": {
+          "type": "esriSLS",
+          "style": "esriSLSDashDot",
+          "color": [110,110,110,255],
+          "width": 1
+	}
+      };
+      var style = ol3Esri.StyleGenerator._convertEsriSFS(symbol);
+      var fill = style.getFill();
+      var stroke = style.getStroke();
+      expect(fill.getColor()).to.eql([115,76,0,1]);
+      expect(stroke.getColor()).to.eql([110,110,110,1]);
+      expect(stroke.getWidth()).to.be(1/0.75);
+      expect(stroke.getLineDash()).to.eql([5, 5, 1, 2]);
+    });
+  });
+
   // http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Aggregation%20of%20Trimet%20Transit%20Stops%20to%20Portland%20Neighborhoods/FeatureServer
   describe('generates correct style (Portland)', function(){
     var style;

@@ -11,7 +11,7 @@ export default class StyleGenerator {
     this._renderers.classBreaks = this._renderClassBreaks;
   }
   static _convertPointToPixel(point) {
-    return Math.ceil(point / 0.75);
+    return (point / 0.75);
   }
   static _transformColor(color) {
     // alpha channel is different, runs from 0-255 but in ol3 from 0-1
@@ -19,7 +19,7 @@ export default class StyleGenerator {
   }
   /* convert an Esri Picture Marker Symbol */
   static _convertEsriPMS(symbol) {
-    var width = StyleGenerator._convertPointToPixel(symbol.width);
+    var width = Math.ceil(StyleGenerator._convertPointToPixel(symbol.width));
     var img = document.createElement('img');
     img.src = 'data:' + symbol.contentType + ';base64, ' + symbol.imageData;
     return new ol.style.Style({
@@ -35,30 +35,102 @@ export default class StyleGenerator {
     var fill = new ol.style.Fill({
       color: StyleGenerator._transformColor(symbol.color)
     });
-    var stroke = new ol.style.Stroke({
-      color: StyleGenerator._transformColor(symbol.outline.color)
-    });
+    var stroke = StyleGenerator._convertOutline(symbol.outline);
     return new ol.style.Style({
       fill: fill,
       stroke: stroke
     });
   }
+  static _convertAngle(angle) {
+    // The angle property defines the number of degrees (0 to 360) that a marker symbol is rotated. The rotation is from East in a counter-clockwise direction where East is the 0° axis.
+    // TODO
+  }
+  static _convertOutline(outline) {
+    var lineDash;
+    var color = StyleGenerator._transformColor(outline.color);
+    if (outline.style === 'esriSLSDash') {
+      lineDash = [5];
+    } else if (outline.style === 'esriSLSDashDot') {
+      lineDash = [5, 5, 1, 2];
+    } else if (outline.style === 'esriSLSDashDotDot') {
+      lineDash = [5, 5, 1, 2, 1, 2];
+    } else if (outline.style === 'esriSLSDot') {
+      lineDash = [1, 2];
+    } else if (outline.style === 'esriSLSNull') {
+      // line not visible, make color fully transparent
+      color[3] = 0;
+    }
+    return new ol.style.Stroke({
+      color: color,
+      lineDash: lineDash,
+      width: StyleGenerator._convertPointToPixel(outline.width)
+    });
+  }
   /* convert an Esri Simple Marker Symbol */
   static _convertEsriSMS(symbol, optSize) {
+    var fill = new ol.style.Fill({
+      color: StyleGenerator._transformColor(symbol.color)
+    });
+    var stroke = StyleGenerator._convertOutline(symbol.outline);
+    var radius = optSize ? optSize : symbol.size;
     if (symbol.style === 'esriSMSCircle') {
-      // TODO implement outline style (e.g. "esriSLSSolid")
-      var circle = new ol.style.Circle({
-        radius: optSize ? optSize : symbol.size,
-        fill: new ol.style.Fill({
-          color: StyleGenerator._transformColor(symbol.color)
-        }),
-        stroke: new ol.style.Stroke({
-          color: StyleGenerator._transformColor(symbol.outline.color),
-          width: symbol.outline.width
+      return new ol.style.Style({
+        image: new ol.style.Circle({
+          radius: radius,
+          fill: fill, 
+          stroke: stroke 
         })
       });
+    } else if (symbol.type === 'esriSMSCross') {
       return new ol.style.Style({
-        image: circle
+        image: new ol.style.RegularShape({
+          fill: fill,
+          stroke: stroke,
+          points: 4,
+          radius: radius,
+          radius2: 0,
+          angle: 0
+        })
+      });
+    } else if (symbol.type === 'esriSMSDiamond') {
+      return new ol.style.Style({
+        image: new ol.style.RegularShape({
+          fill: fill,
+          stroke: stroke,
+          points: 4,
+          radius: radius
+        })
+      });
+    } else if (symbol.type === 'esriSMSSquare') {
+      return new ol.style.Style({
+        image: new ol.style.RegularShape({
+          fill: fill,   
+          stroke: stroke,
+          points: 4,    
+          radius: radius,
+          angle: Math.PI / 4
+        })
+      });
+    } else if (symbol.type === 'esriSMSX') {
+      return new ol.style.Style({
+        image: new ol.style.RegularShape({
+          fill: fill,
+          stroke: stroke,
+          points: 4,
+          radius: radius,
+          radius2: 0,
+          angle: Math.PI / 4
+        })
+      });
+    } else if (symbol.type === 'esriSMSTriangle') {
+      return new ol.style.Style({
+        image: new ol.style.RegularShape({
+          fill: fill,   
+          stroke: stroke,
+          points: 3,    
+          radius: radius,
+          angle: 0
+        })
       });
     }
   }
