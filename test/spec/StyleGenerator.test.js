@@ -32,6 +32,42 @@ describe('StyleGenerator', function() {
     });
   });
 
+  describe('#convertEsriTS', function() {
+    it('converts a text symbol correctly', function() {
+      var symbol = {
+       "type": "esriTS",
+       "color": [78,78,78,255],
+       "backgroundColor": [0,0,0,0],
+       "borderLineSize": 2,
+       "borderLineColor": [255,0,255,255],
+       "haloSize": 2,
+       "haloColor": [0,255,0,255],
+       "verticalAlignment": "bottom",
+       "horizontalAlignment": "left",
+       "rightToLeft": false,
+       "angle": 0,
+       "xoffset": 0,
+       "yoffset": 0,
+       "kerning": true,
+       "font": {
+         "family": "Arial",
+         "size": 12,
+         "style": "normal",
+         "weight": "bold",
+         "decoration": "none"
+       }
+      };
+      var style = ol3Esri.StyleGenerator._convertEsriTS(symbol);
+      var text = style.getText();
+      expect(text.getFont()).to.be('normal bold 12 px Arial');
+      expect(text.getFill().getColor()).to.eql([78, 78, 78, 1]);
+      expect(text.getTextBaseline()).to.be('bottom');
+      expect(text.getTextAlign()).to.be('left');
+      expect(text.getOffsetX()).to.be(0);
+      expect(text.getOffsetY()).to.be(0);
+    });
+  });
+
   describe('#convertEsriSLS', function() {
     it('converts simple line symbol correctly', function() {
       var symbol = {

@@ -2,10 +2,13 @@
 export default class StyleGenerator {
   constructor() {
     this._converters = {};
+    // TODO add support for picture fill symbol when ol3 supports it
+    // see: https://github.com/openlayers/ol3/issues/2208
     this._converters.esriPMS = StyleGenerator._convertEsriPMS;
     this._converters.esriSFS = StyleGenerator._convertEsriSFS;
-    this._converters.esriSMS = StyleGenerator._convertEsriSMS;
     this._converters.esriSLS = StyleGenerator._convertEsriSLS;
+    this._converters.esriSMS = StyleGenerator._convertEsriSMS;
+    this._converters.esriTS = StyleGenerator._convertEsriTS;
     this._renderers = {};
     this._renderers.uniqueValue = this._renderUniqueValue;
     this._renderers.simple = this._renderSimple;
@@ -17,6 +20,19 @@ export default class StyleGenerator {
   static _transformColor(color) {
     // alpha channel is different, runs from 0-255 but in ol3 from 0-1
     return [color[0], color[1], color[2], color[3] / 255];
+  }
+  /* convert an Esri Text Symbol */
+  static _convertEsriTS(symbol) {
+    return new ol.style.Style({
+      text: new ol.style.Text({
+        fill: new ol.style.Fill({color: StyleGenerator._transformColor(symbol.color)}),
+        font: symbol.font.style + ' ' + symbol.font.weight + ' ' + symbol.font.size + ' px ' + symbol.font.family,
+        textBaseline: symbol.verticalAlignment,
+        textAlign: symbol.horizontalAlignment,
+        offsetX: StyleGenerator._convertPointToPixel(symbol.xoffset),
+        offsetY: StyleGenerator._convertPointToPixel(symbol.yoffset)
+      })
+    });
   }
   /* convert an Esri Picture Marker Symbol */
   static _convertEsriPMS(symbol) {
