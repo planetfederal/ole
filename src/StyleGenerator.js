@@ -5,6 +5,7 @@ export default class StyleGenerator {
     this._converters.esriPMS = StyleGenerator._convertEsriPMS;
     this._converters.esriSFS = StyleGenerator._convertEsriSFS;
     this._converters.esriSMS = StyleGenerator._convertEsriSMS;
+    this._converters.esriSLS = StyleGenerator._convertEsriSLS;
     this._renderers = {};
     this._renderers.uniqueValue = this._renderUniqueValue;
     this._renderers.simple = this._renderSimple;
@@ -64,6 +65,12 @@ export default class StyleGenerator {
       color: color,
       lineDash: lineDash,
       width: StyleGenerator._convertPointToPixel(outline.width)
+    });
+  }
+  /* convert an Esri Simple Line Symbol */
+  static _convertEsriSLS(symbol) {
+    return new ol.style.Style({
+      stroke: StyleGenerator._convertOutline(symbol)
     });
   }
   /* convert an Esri Simple Marker Symbol */

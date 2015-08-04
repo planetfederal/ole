@@ -32,6 +32,22 @@ describe('StyleGenerator', function() {
     });
   });
 
+  describe('#convertEsriSLS', function() {
+    it('converts simple line symbol correctly', function() {
+      var symbol = {
+        "type": "esriSLS",
+        "style": "esriSLSDot",
+        "color": [115,76,0,255],
+        "width": 1
+      };
+      var style = ol3Esri.StyleGenerator._convertEsriSLS(symbol);
+      var stroke = style.getStroke();
+      expect(stroke.getColor()).to.eql([115,76,0,1]);
+      expect(stroke.getWidth()).to.be(1/0.75);
+      expect(stroke.getLineDash()).to.eql([1, 2]);
+    });
+  });
+
   describe('#convertEsriSFS', function() {
     it('converts simple fill symbol correctly', function() {
       var symbol = {
