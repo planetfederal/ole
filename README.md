@@ -1,6 +1,6 @@
 # ol3-esri
 
-Intgeration with OpenLayers 3 and Esri ArcGIS REST services.
+Integration of OpenLayers 3 and Esri ArcGIS REST services.
 
 ## Getting started
     npm install
