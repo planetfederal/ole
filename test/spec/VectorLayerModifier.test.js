@@ -1,12 +1,12 @@
 describe('VectorLayerModifier', function() {
 
   describe('#modifyLayer', function() {
-    var layer;
+    var layer, layerInfo;
     beforeEach(function() {
       layer = new ol.layer.Vector();
-    });
-    it('applies transparency', function() {
-      var layerInfo = {
+      layerInfo = {
+        minScale: 288896, 
+        maxScale: 0, 
         drawingInfo: {
           renderer: {
             type: 'simple',
@@ -18,9 +18,17 @@ describe('VectorLayerModifier', function() {
           transparency: 40
         }
       };
-      expect(layer.getOpacity()).to.be(1);
       ol3Esri.VectorLayerModifier.modifyLayer(layerInfo, layer, ol.proj.get('EPSG:3857'));
+    });
+    it('applies transparency', function() {
       expect(layer.getOpacity()).to.be(0.6);
+    });
+    it('applies minScale / maxScale', function() {
+      expect(layer.getMinResolution()).to.be(0);
+      expect(layer.getMaxResolution()).to.be(80.89104178208359);
+    });
+    it('sets the style on the layer', function() {
+      expect(layer.getStyle().getFill().getColor()).to.eql([255,0,0,1]);
     });
   });
 
