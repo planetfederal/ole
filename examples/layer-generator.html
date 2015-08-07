@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ArcGIS REST from Capabilities example</title>
+<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.7.0/ol.css" type="text/css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.7.0/ol.js"></script>
+<script src="../dist/ol3-esri.js"></script>
+</head>
+<body>
+<div class="container-fluid">
+
+<div class="row-fluid">
+  <div class="span12">
+    <input id="caps-url" value="http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Specialty/ESRI_StateCityHighway_USA/MapServer" style="width:800px"></input>
+    <button id="get-caps">Connect</button>
+    <div id="map" class="map"></div>
+  </div>
+</div>
+
+</div>
+<script>
+var map;
+
+document.getElementById('get-caps').addEventListener('click', function() {
+  var capsUrl = document.getElementById('caps-url').value;
+  if (capsUrl.charAt(capsUrl.length - 1) === '?') {
+    capsUrl = capsUrl.substring(0, capsUrl.length - 1);
+  }
+  $.ajax({
+    url: capsUrl,
+    jsonp: 'callback',
+    dataType: 'jsonp',
+    data: {
+      f: 'json'
+    },
+    success: function(config) {
+      if (config.error) {
+        alert(config.error.message + '\n' +
+            config.error.details.join('\n'));
+      } else {
+        var generator = new ol3Esri.LayerGenerator({config: config, url: capsUrl});
+        var layer = generator.createLayer();
+        var fullExtent = generator.getFullExtent();
+        var resolutions = generator.getResolutions();
+        var projection = generator.getProjection();
+        if (!map) {
+          map = new ol.Map({
+            controls: ol.control.defaults().extend([
+              new ol.control.MousePosition()]),
+            layers: [layer],
+            target: 'map',
+            view: new ol.View({
+              resolutions: resolutions,
+              projection: projection
+            })
+          });
+        } else {
+          map.getLayers().clear();
+          map.setView(new ol.View({
+            resolutions: resolutions,
+            projection: projection
+          }));
+          map.addLayer(layer);
+        }
+        map.getView().fit(fullExtent, map.getSize());
+      }
+    }
+  });
+});
+
+</script>
+</body>
+</html>
