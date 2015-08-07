@@ -161,42 +161,43 @@ export default class StyleGenerator {
     return this._converters[renderer.symbol.type].call(this, renderer.symbol);
   }
   _renderClassBreaks(renderer) {
+    var defaultSymbol = renderer.defaultSymbol;
+    var defaultStyle = this._converters[defaultSymbol.type].call(this, renderer.defaultSymbol);
     var field = renderer.field;
-    var minDataValue = renderer.visualVariables[0].minDataValue;
-    var maxDataValue = renderer.visualVariables[0].maxDataValue;
-    var minSize = renderer.visualVariables[0].minSize;
-    var maxSize = renderer.visualVariables[0].maxSize;
-    var sizes = [];
-    var size = minSize;
-    var symbol = renderer.classBreakInfos[0].symbol;
-    while (size <= maxSize) {
-      sizes.push(StyleGenerator._convertPointToPixel(size));
-      size += minSize;
-    }
+    var minValue = renderer.minValue;
     var classes = [];
-    var min = minDataValue;
-    var geomFunction = function(feature) {
-      var geometry = feature.getGeometry();
-      if (geometry && geometry instanceof ol.geom.Polygon) {
-        return geometry.getInteriorPoint();
+    for (var i = 0, ii = renderer.classBreakInfos.length; i < ii; ++i) {
+      var classBreakInfo = renderer.classBreakInfos[i];
+      var min;
+      if (classBreakInfo.classMinValue === null || classBreakInfo.classMinValue === undefined) {
+        if (i === 0) {
+          min = renderer.minValue;
+        } else {
+          min = renderer.classBreakInfos[i-1].classMaxValue;
+        }
+      } else {
+        min = classBreakInfo.classMinValue;
       }
-    };
-    var increment = (maxDataValue - minDataValue) / sizes.length;
-    var i, ii;
-    for (i = 0, ii = sizes.length; i < ii; ++i) {
-      var style = this._converters[symbol.type].call(this, symbol, sizes[i]);
-      style.setGeometry(geomFunction);
-      classes.push({min: min, max: min + increment, style: style});
-      min += increment;
+      var max = classBreakInfo.classMaxValue;
+      var symbol = classBreakInfo.symbol;
+      var style = this._converters[symbol.type].call(this, symbol);
+      classes.push({min: min, max: max, style: style});
     }
     return (function() {
       return function(feature) {
         var value = feature.get(field);
         for (i = 0, ii = classes.length; i < ii; ++i) {
-          if (value >= classes[i].min && value <= classes[i].max) {
+          var condition;
+          if (i === 0) {
+            condition = (value >= classes[i].min && value <= classes[i].max);
+          } else {
+            condition = (value > classes[i].min && value <= classes[i].max);
+          }
+          if (condition) {
             return [classes[i].style];
           }
         }
+        return [defaultStyle];
       };
     }());
   }
