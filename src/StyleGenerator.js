@@ -52,7 +52,7 @@ export default class StyleGenerator {
     var fill = new ol.style.Fill({
       color: StyleGenerator._transformColor(symbol.color)
     });
-    var stroke = StyleGenerator._convertOutline(symbol.outline);
+    var stroke = symbol.outline ? StyleGenerator._convertOutline(symbol.outline) : undefined;
     return new ol.style.Style({
       fill: fill,
       stroke: stroke
@@ -94,7 +94,7 @@ export default class StyleGenerator {
     var fill = new ol.style.Fill({
       color: StyleGenerator._transformColor(symbol.color)
     });
-    var stroke = StyleGenerator._convertOutline(symbol.outline);
+    var stroke = symbol.outline ? StyleGenerator._convertOutline(symbol.outline) : undefined;
     var radius = optSize ? optSize : StyleGenerator._convertPointToPixel(symbol.size)/2;
     if (symbol.style === 'esriSMSCircle') {
       return new ol.style.Style({

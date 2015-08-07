@@ -2,7 +2,8 @@
     var specPath = './spec/',
         dependencies = [
             'LayerGenerator.test.js',
-            'StyleGenerator.test.js'
+            'StyleGenerator.test.js',
+            'VectorLayerModifier.test.js'
         ],
         getScriptTag = global.TestUtil.getExternalScriptTag,
         dependencyCnt = dependencies.length,
