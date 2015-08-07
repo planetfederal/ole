@@ -136,6 +136,39 @@ describe('StyleGenerator', function() {
     });
   });
 
+  describe('#renderSimple', function() {
+    it('renders a simple renderer', function() {
+      var renderer = {  
+        "type": "simple",
+        "symbol": {
+          "type": "esriSMS",
+          "style": "esriSMSCircle",
+          "color": [255,0,0,255],
+          "size": 5,
+          "angle": 0,
+          "xoffset": 0,
+          "yoffset": 0,
+          "outline": {
+            "color": [0,0,0,255],
+            "width": 1
+          }
+        },
+        "label": "",
+        "description": "",
+        "rotationType": "geographic",
+        "rotationExpression": "[Rotation] * 2"
+      };
+      var style = new ol3Esri.StyleGenerator()._renderSimple(renderer);
+      expect(style).to.be.a(ol.style.Style);
+      var image = style.getImage();
+      expect(image).to.be.a(ol.style.Circle);
+      expect(image.getFill().getColor()).to.eql([255,0,0,1]);
+      expect(image.getRadius()).to.be((5/2)/0.75);
+      expect(image.getStroke().getColor()).to.eql([0,0,0,1]);
+      expect(image.getStroke().getWidth()).to.be(1/0.75);
+    });
+  });
+
   // http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Aggregation%20of%20Trimet%20Transit%20Stops%20to%20Portland%20Neighborhoods/FeatureServer
   describe('generates correct style (Portland)', function(){
     var style;
