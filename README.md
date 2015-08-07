@@ -10,3 +10,7 @@ Intgeration with OpenLayers 3 and Esri ArcGIS REST services.
     npm start
     npm test
     http://127.0.0.1:1337/test/index.html
+
+## Examples
+    npm start
+    http://127.0.0.1:1337/examples/
