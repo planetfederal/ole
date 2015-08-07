@@ -58,10 +58,6 @@ export default class StyleGenerator {
       stroke: stroke
     });
   }
-  static _convertAngle(angle) {
-    // The angle property defines the number of degrees (0 to 360) that a marker symbol is rotated. The rotation is from East in a counter-clockwise direction where East is the 0° axis.
-    // TODO
-  }
   static _convertOutline(outline) {
     var lineDash;
     var color = StyleGenerator._transformColor(outline.color);
@@ -95,13 +91,13 @@ export default class StyleGenerator {
       color: StyleGenerator._transformColor(symbol.color)
     });
     var stroke = symbol.outline ? StyleGenerator._convertOutline(symbol.outline) : undefined;
-    var radius = optSize ? optSize : StyleGenerator._convertPointToPixel(symbol.size)/2;
+    var radius = optSize ? optSize : StyleGenerator._convertPointToPixel(symbol.size) / 2;
     if (symbol.style === 'esriSMSCircle') {
       return new ol.style.Style({
         image: new ol.style.Circle({
           radius: radius,
-          fill: fill, 
-          stroke: stroke 
+          fill: fill,
+          stroke: stroke
         })
       });
     } else if (symbol.style === 'esriSMSCross') {
@@ -127,9 +123,9 @@ export default class StyleGenerator {
     } else if (symbol.style === 'esriSMSSquare') {
       return new ol.style.Style({
         image: new ol.style.RegularShape({
-          fill: fill,   
+          fill: fill,
           stroke: stroke,
-          points: 4,    
+          points: 4,
           radius: radius,
           angle: Math.PI / 4
         })
@@ -148,9 +144,9 @@ export default class StyleGenerator {
     } else if (symbol.style === 'esriSMSTriangle') {
       return new ol.style.Style({
         image: new ol.style.RegularShape({
-          fill: fill,   
+          fill: fill,
           stroke: stroke,
-          points: 3,    
+          points: 3,
           radius: radius,
           angle: 0
         })
@@ -164,7 +160,6 @@ export default class StyleGenerator {
     var defaultSymbol = renderer.defaultSymbol;
     var defaultStyle = this._converters[defaultSymbol.type].call(this, renderer.defaultSymbol);
     var field = renderer.field;
-    var minValue = renderer.minValue;
     var classes = [];
     for (var i = 0, ii = renderer.classBreakInfos.length; i < ii; ++i) {
       var classBreakInfo = renderer.classBreakInfos[i];
@@ -173,7 +168,7 @@ export default class StyleGenerator {
         if (i === 0) {
           min = renderer.minValue;
         } else {
-          min = renderer.classBreakInfos[i-1].classMaxValue;
+          min = renderer.classBreakInfos[i - 1].classMaxValue;
         }
       } else {
         min = classBreakInfo.classMinValue;

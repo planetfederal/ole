@@ -11,6 +11,9 @@ Intgeration with OpenLayers 3 and Esri ArcGIS REST services.
     npm test
     http://127.0.0.1:1337/test/index.html
 
+## Linting
+    npm run lint
+
 ## Examples
     npm start
     http://127.0.0.1:1337/examples/
