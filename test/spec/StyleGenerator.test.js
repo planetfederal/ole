@@ -1,3 +1,11 @@
+function itNoPhantom() {
+  if (window.mochaPhantomJS) {
+    return xit.apply(this, arguments);
+  } else {
+    return it.apply(this, arguments);
+  }
+}
+
 describe('StyleGenerator', function() {
 
   describe('#convertPointToPixel', function() {
@@ -13,7 +21,7 @@ describe('StyleGenerator', function() {
   });
 
   describe('#convertEsriPMS', function() {
-    it('converts picture marker symbol correctly', function() {
+    itNoPhantom('converts picture marker symbol correctly', function() {
       var symbol = {
         "type" : "esriPMS", 
         "url" : "471E7E31", 
