@@ -136,6 +136,55 @@ describe('StyleGenerator', function() {
     });
   });
 
+  describe('#renderUnique', function() {
+    it('renders a unique renderer', function() {
+      var renderer = {
+        "type" : "uniqueValue", 
+        "field1" : "SubtypeCD", 
+        "field2" : null, 
+        "field3" : null, 
+        "fieldDelimiter" : ", ", 
+        "defaultSymbol" : {
+          "type" : "esriSLS", 
+          "style" : "esriSLSSolid", 
+          "color" : [130,130,130,255], 
+          "width" : 1
+        }, 
+        "defaultLabel" : "\u003cOther values\u003e", 
+        "uniqueValueInfos" : [{
+          "value" : "1", 
+          "label" : "Duct Bank", 
+          "description" : "Duct Bank description", 
+          "symbol" : {
+            "type" : "esriSLS", 
+            "style" : "esriSLSDash", 
+            "color" : [76,0,163,255], 
+            "width" : 1
+          }
+        }, { 
+          "value" : "2", 
+          "label" : "Trench", 
+          "description" : "Trench description", 
+          "symbol" : {
+            "type" : "esriSLS", 
+            "style" : "esriSLSDot", 
+            "color" : [115,76,0,255], 
+            "width" : 1
+          }
+        }],
+        "rotationType": "geographic",
+        "rotationExpression": "[Rotation] * 2"
+      };
+      var styleFn = new ol3Esri.StyleGenerator()._renderUniqueValue(renderer);
+      var feature = new ol.Feature({'SubtypeCD': '1'});
+      var style = styleFn.call(null, feature)[0];
+      expect(style.getStroke().getColor()).to.eql([76,0,163,1]);
+      feature.set('SubtypeCD', '2');
+      style = styleFn.call(null, feature)[0];
+      expect(style.getStroke().getColor()).to.eql([115,76,0,1]);
+    });
+  });
+
   describe('#renderSimple', function() {
     it('renders a simple renderer', function() {
       var renderer = {  
