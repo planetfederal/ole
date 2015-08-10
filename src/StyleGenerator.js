@@ -86,12 +86,12 @@ export default class StyleGenerator {
     });
   }
   /* convert an Esri Simple Marker Symbol */
-  static _convertEsriSMS(symbol, optSize) {
+  static _convertEsriSMS(symbol) {
     var fill = new ol.style.Fill({
       color: StyleGenerator._transformColor(symbol.color)
     });
     var stroke = symbol.outline ? StyleGenerator._convertOutline(symbol.outline) : undefined;
-    var radius = optSize ? optSize : StyleGenerator._convertPointToPixel(symbol.size) / 2;
+    var radius = StyleGenerator._convertPointToPixel(symbol.size) / 2;
     if (symbol.style === 'esriSMSCircle') {
       return new ol.style.Style({
         image: new ol.style.Circle({
