@@ -54,10 +54,11 @@ describe('StyleGenerator', function() {
        "verticalAlignment": "bottom",
        "horizontalAlignment": "left",
        "rightToLeft": false,
-       "angle": 0,
+       "angle": 180,
        "xoffset": 0,
        "yoffset": 0,
        "kerning": true,
+       "text": "Foo",
        "font": {
          "family": "Arial",
          "size": 12,
@@ -74,6 +75,8 @@ describe('StyleGenerator', function() {
       expect(text.getTextAlign()).to.be('left');
       expect(text.getOffsetX()).to.be(0);
       expect(text.getOffsetY()).to.be(0);
+      expect(text.getRotation()).to.be(4.71238898038469);
+      expect(text.getText()).to.be('Foo');
     });
   });
 

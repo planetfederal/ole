@@ -1,4 +1,6 @@
 /* global ol */
+import utils from './Util';
+
 export default class StyleGenerator {
   constructor() {
     this._converters = {};
@@ -23,6 +25,9 @@ export default class StyleGenerator {
   }
   /* convert an Esri Text Symbol */
   static _convertEsriTS(symbol) {
+    var rotation = utils.isDefinedAndNotNull(symbol.angle) ?
+      StyleGenerator._transformAngle(symbol.angle) : undefined;
+    var text = utils.isDefinedAndNotNull(symbol.text) ? symbol.text : undefined;
     return new ol.style.Style({
       text: new ol.style.Text({
         fill: new ol.style.Fill({color: StyleGenerator._transformColor(symbol.color)}),
@@ -30,7 +35,9 @@ export default class StyleGenerator {
         textBaseline: symbol.verticalAlignment,
         textAlign: symbol.horizontalAlignment,
         offsetX: StyleGenerator._convertPointToPixel(symbol.xoffset),
-        offsetY: StyleGenerator._convertPointToPixel(symbol.yoffset)
+        offsetY: StyleGenerator._convertPointToPixel(symbol.yoffset),
+        rotation: rotation,
+        text: text
       })
     });
   }
@@ -39,7 +46,7 @@ export default class StyleGenerator {
     var width = Math.ceil(StyleGenerator._convertPointToPixel(symbol.width));
     var img = document.createElement('img');
     img.src = 'data:' + symbol.contentType + ';base64, ' + symbol.imageData;
-    var rotation = (symbol.angle !== null && symbol.angle !== undefined) ?
+    var rotation = utils.isDefinedAndNotNull(symbol.angle) ?
       StyleGenerator._transformAngle(symbol.angle) : undefined;
     return new ol.style.Style({
       image: new ol.style.Icon({
@@ -105,7 +112,7 @@ export default class StyleGenerator {
     });
     var stroke = symbol.outline ? StyleGenerator._convertOutline(symbol.outline) : undefined;
     var radius = StyleGenerator._convertPointToPixel(symbol.size) / 2;
-    var rotation = (symbol.angle !== null && symbol.angle !== undefined) ?
+    var rotation = utils.isDefinedAndNotNull(symbol.angle) ?
       StyleGenerator._transformAngle(symbol.angle) : undefined;
     if (symbol.style === 'esriSMSCircle') {
       return new ol.style.Style({

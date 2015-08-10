@@ -1,11 +1,12 @@
 /* global ol */
 import StyleGenerator from './StyleGenerator';
+import utils from './Util';
 
 export default class VectorLayerModifier {
   static modifyLayer(layerInfo, layer, mapProjection) {
     var styleGenerator = new StyleGenerator();
     var transparency = layerInfo.drawingInfo.transparency;
-    if (transparency !== null || transparency !== undefined) {
+    if (utils.isDefinedAndNotNull(transparency)) {
       layer.setOpacity((100 - transparency) / 100);
     }
     layer.setStyle(styleGenerator.generateStyle(layerInfo.drawingInfo));
