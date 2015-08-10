@@ -1,4 +1,3 @@
-/* global ol */
 import StyleGenerator from './StyleGenerator';
 import utils from './Util';
 
@@ -9,17 +8,23 @@ export default class VectorLayerModifier {
     if (utils.isDefinedAndNotNull(transparency)) {
       layer.setOpacity((100 - transparency) / 100);
     }
-    layer.setStyle(styleGenerator.generateStyle(layerInfo.drawingInfo));
-    var dpi = 25.4 / 0.28;
-    var mpu = ol.proj.METERS_PER_UNIT[mapProjection.getUnits()];
-    var inchesPerMeter = 39.37;
+    var mapUnits = mapProjection.getUnits();
+    layer.setStyle(styleGenerator.generateStyle(layerInfo, mapUnits));
     if (layerInfo.minScale) {
-      var maxResolution = parseFloat(layerInfo.minScale) / (mpu * inchesPerMeter * dpi);
-      layer.setMaxResolution(maxResolution);
+      layer.setMaxResolution(
+        utils.getResolutionForScale(
+          layerInfo.minScale,
+          mapUnits
+        )
+      );
     }
     if (layerInfo.maxScale) {
-      var minResolution = parseFloat(layerInfo.maxScale) / (mpu * inchesPerMeter * dpi);
-      layer.setMinResolution(minResolution);
+      layer.setMinResolution(
+        utils.getResolutionForScale(
+          layerInfo.maxScale,
+          mapUnits
+        )
+      );
     }
   }
 }

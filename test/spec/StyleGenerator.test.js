@@ -20,6 +20,75 @@ describe('StyleGenerator', function() {
     });
   });
 
+  describe('#convertLabelingInfo', function() {
+    it('converts labeling info correctly', function() {
+      var labelingInfo = [{
+        "labelPlacement": "esriServerPolygonPlacementAlwaysHorizontal",
+        "labelExpression": "[TAG]",
+        "useCodedValues": false,
+        "symbol": {
+          "type": "esriTS",
+          "color": [78,78,78,255],
+          "backgroundColor": null,
+          "borderLineColor": null,
+          "verticalAlignment": "bottom",
+          "horizontalAlignment": "left",
+          "rightToLeft": false,
+          "angle": 0,
+          "xoffset": 0,
+          "yoffset": 0,
+          "font": {
+            "family": "Arial",
+            "size": 12,
+            "style": "normal",
+            "weight": "bold",
+            "decoration": "none"
+          }
+        },
+        "minScale": 1999,
+        "maxScale": 0,
+        "where": ""
+      }, {
+        "labelPlacement": "esriServerPolygonPlacementAlwaysHorizontal",
+        "labelExpression": "[XAG]",
+        "useCodedValues": true,
+        "symbol": {
+          "type": "esriTS",
+          "color": [88,88,88,255],
+          "backgroundColor": null,
+          "borderLineColor": null,
+          "verticalAlignment": "bottom",
+          "horizontalAlignment": "left",
+          "rightToLeft": false,
+          "angle": 0,
+          "xoffset": 0,
+          "yoffset": 0,
+          "font": {
+            "family": "Arial",
+            "size": 12,
+            "style": "normal",
+            "weight": "bold",
+            "decoration": "none"
+          }
+        },
+        "minScale": 0,
+        "maxScale": 7100,
+        "where": ""
+      }];
+      var styles = new ol3Esri.StyleGenerator()._convertLabelingInfo(labelingInfo, 'm');
+      var feature = new ol.Feature({'TAG': 'foo'});
+      var style = styles[0].call(null, feature, 0.4)[0];
+      expect(style.getText().getText()).to.be('foo');
+      expect(style.getText().getFill().getColor()).to.eql([78,78,78,1]);
+      feature = new ol.Feature({'XAG': 'bar'});
+      style = styles[1].call(null, feature, 5)[0];
+      expect(style.getText().getText()).to.be('bar');
+      expect(style.getText().getFill().getColor()).to.eql([88,88,88,1]);
+      style = styles[1].call(null, feature, 1);
+      expect(style).to.be(undefined); // out of scale
+    });
+  });
+
   describe('#convertEsriPMS', function() {
     itNoPhantom('converts picture marker symbol correctly', function() {
       var symbol = {
@@ -317,12 +386,12 @@ describe('StyleGenerator', function() {
 
   // http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/affordable_housing/FeatureServer
   describe('generates correct style (affordable_housing)', function(){
-    var style, drawingInfo;
+    var styles, layerInfo;
     beforeEach(function(done) {
       afterLoadJson('spec/data/affordable_housing.json', function(json) {
         var generator = new ol3Esri.StyleGenerator();
-        drawingInfo = JSON.parse(json).drawingInfo;
-        style = generator.generateStyle(drawingInfo);
+        layerInfo = JSON.parse(json);
+        styles = generator.generateStyle(layerInfo, 'm');
         done();
       });
     });
@@ -332,10 +401,11 @@ describe('StyleGenerator', function() {
       // size 15 points, 20 pixels
       // image width is 64x64
       // scale = 20/64
+      var style = styles[0];
       expect(style).to.be.a(ol.style.Style);
       var image = style.getImage();
       expect(image).to.be.a(ol.style.Icon);
-      expect(image.getSrc().split(',')[1].trim().replace('%20', '')).to.be(drawingInfo.renderer.symbol.imageData);
+      expect(image.getSrc().split(',')[1].trim().replace('%20', '')).to.be(layerInfo.drawingInfo.renderer.symbol.imageData);
     });
   });
 

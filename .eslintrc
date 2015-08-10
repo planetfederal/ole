@@ -8,6 +8,7 @@
     "es6": true
   },
   "rules": {
+    "no-loop-func": false,
     "no-underscore-dangle": false,
     "strict": [2, "never"],
     "indent": [2, 2],

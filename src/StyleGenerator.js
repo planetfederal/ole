@@ -23,6 +23,50 @@ export default class StyleGenerator {
     // alpha channel is different, runs from 0-255 but in ol3 from 0-1
     return [color[0], color[1], color[2], color[3] / 255];
   }
+  _convertLabelingInfo(labelingInfo, mapUnits) {
+    var styles = [];
+    for (var i = 0, ii = labelingInfo.length; i < ii; ++i) {
+      var labelExpression = labelingInfo[i].labelExpression;
+      // only limited support for label expressions
+      var field = labelExpression.substr(labelExpression.indexOf('[') + 1,
+        labelExpression.indexOf(']') - 1);
+      var symbol = labelingInfo[i].symbol;
+      var maxScale = labelingInfo[i].maxScale;
+      var minScale = labelingInfo[i].minScale;
+      var minResolution = null;
+      if (maxScale !== 0) {
+        minResolution = utils.getResolutionForScale(maxScale, mapUnits);
+      }
+      var maxResolution = null;
+      if (minScale !== 0) {
+        maxResolution = utils.getResolutionForScale(minScale, mapUnits);
+      }
+      var style = this._converters[symbol.type].call(this, symbol);
+      styles.push(function() {
+        return function(feature, resolution) {
+          var visible = true;
+          if (this.minResolution !== null && this.maxResolution !== null) {
+            visible = resolution < this.maxResolution && resolution >= this.minResolution;
+          } else if (this.minResolution !== null) {
+            visible = resolution >= this.minResolution;
+          } else if (this.maxResolution !== null) {
+            visible = resolution < this.maxResolution;
+          }
+          if (visible) {
+            var value = feature.get(this.field);
+            this.style.getText().setText(value);
+            return [this.style];
+          }
+        };
+      }().bind({
+        minResolution: minResolution,
+        maxResolution: maxResolution,
+        field: field,
+        style: style
+      }));
+    }
+    return styles;
+  }
   /* convert an Esri Text Symbol */
   static _convertEsriTS(symbol) {
     var rotation = utils.isDefinedAndNotNull(symbol.angle) ?
@@ -238,7 +282,18 @@ export default class StyleGenerator {
       };
     }());
   }
-  generateStyle(drawingInfo) {
-    return this._renderers[drawingInfo.renderer.type].call(this, drawingInfo.renderer);
+  generateStyle(layerInfo, mapUnits) {
+    var drawingInfo = layerInfo.drawingInfo;
+    var styles = [];
+    var drawingInfoStyle = this._renderers[drawingInfo.renderer.type].call(this, drawingInfo.renderer);
+    if (drawingInfoStyle !== undefined) {
+      styles.push(drawingInfoStyle);
+    }
+    if (layerInfo.labelingInfo) {
+      var labelingInfoStyles = this._convertLabelingInfo(layerInfo.labelingInfo, mapUnits);
+      return styles.concat(labelingInfoStyles);
+    } else {
+      return styles;
+    }
   }
 }
