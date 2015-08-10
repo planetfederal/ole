@@ -29,12 +29,13 @@ describe('StyleGenerator', function() {
         "contentType" : "image/png", 
         "width" : 25, 
         "height" : 25, 
-        "angle" : 0, 
+        "angle" : 180, 
         "xoffset" : 0, 
         "yoffset" : 0
       };
       var style = ol3Esri.StyleGenerator._convertEsriPMS(symbol);
       var iconStyle = style.getImage();
+      expect(iconStyle.getRotation()).to.be(4.71238898038469);
       expect(iconStyle.getSrc()).to.be('data:' + symbol.contentType + ';base64, ' + symbol.imageData);
       expect(iconStyle.getScale()).to.be(1.3076923076923077);
     });

@@ -39,11 +39,14 @@ export default class StyleGenerator {
     var width = Math.ceil(StyleGenerator._convertPointToPixel(symbol.width));
     var img = document.createElement('img');
     img.src = 'data:' + symbol.contentType + ';base64, ' + symbol.imageData;
+    var rotation = (symbol.angle !== null && symbol.angle !== undefined) ?
+      StyleGenerator._transformAngle(symbol.angle) : undefined;
     return new ol.style.Style({
       image: new ol.style.Icon({
         img: img,
         imgSize: [img.width, img.height],
-        scale: width / img.width
+        scale: width / img.width,
+        rotation: rotation
       })
     });
   }
@@ -88,7 +91,7 @@ export default class StyleGenerator {
   }
   static _transformAngle(angle) {
     var normalRad = (angle * Math.PI) / 180;
-    var ol3Rad = -normalRad + Math.PI/2;
+    var ol3Rad = -normalRad + Math.PI / 2;
     if (ol3Rad < 0) {
       return 2 * Math.PI + ol3Rad;
     } else {
