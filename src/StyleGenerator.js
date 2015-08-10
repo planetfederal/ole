@@ -49,6 +49,7 @@ export default class StyleGenerator {
   }
   /* convert an Esri Simple Fill Symbol */
   static _convertEsriSFS(symbol) {
+    // there is no support in openlayers currently for fill patterns, so style is not interpreted
     var fill = new ol.style.Fill({
       color: StyleGenerator._transformColor(symbol.color)
     });
@@ -85,6 +86,15 @@ export default class StyleGenerator {
       stroke: StyleGenerator._convertOutline(symbol)
     });
   }
+  static _transformAngle(angle) {
+    var normalRad = (angle * Math.PI) / 180;
+    var ol3Rad = -normalRad + Math.PI/2;
+    if (ol3Rad < 0) {
+      return 2 * Math.PI + ol3Rad;
+    } else {
+      return ol3Rad;
+    }
+  }
   /* convert an Esri Simple Marker Symbol */
   static _convertEsriSMS(symbol) {
     var fill = new ol.style.Fill({
@@ -92,6 +102,8 @@ export default class StyleGenerator {
     });
     var stroke = symbol.outline ? StyleGenerator._convertOutline(symbol.outline) : undefined;
     var radius = StyleGenerator._convertPointToPixel(symbol.size) / 2;
+    var rotation = (symbol.angle !== null && symbol.angle !== undefined) ?
+      StyleGenerator._transformAngle(symbol.angle) : undefined;
     if (symbol.style === 'esriSMSCircle') {
       return new ol.style.Style({
         image: new ol.style.Circle({
@@ -108,7 +120,8 @@ export default class StyleGenerator {
           points: 4,
           radius: radius,
           radius2: 0,
-          angle: 0
+          angle: 0,
+          rotation: rotation
         })
       });
     } else if (symbol.style === 'esriSMSDiamond') {
@@ -117,7 +130,8 @@ export default class StyleGenerator {
           fill: fill,
           stroke: stroke,
           points: 4,
-          radius: radius
+          radius: radius,
+          rotation: rotation
         })
       });
     } else if (symbol.style === 'esriSMSSquare') {
@@ -127,7 +141,8 @@ export default class StyleGenerator {
           stroke: stroke,
           points: 4,
           radius: radius,
-          angle: Math.PI / 4
+          angle: Math.PI / 4,
+          rotation: rotation
         })
       });
     } else if (symbol.style === 'esriSMSX') {
@@ -138,7 +153,8 @@ export default class StyleGenerator {
           points: 4,
           radius: radius,
           radius2: 0,
-          angle: Math.PI / 4
+          angle: Math.PI / 4,
+          rotation: rotation
         })
       });
     } else if (symbol.style === 'esriSMSTriangle') {
@@ -148,7 +164,8 @@ export default class StyleGenerator {
           stroke: stroke,
           points: 3,
           radius: radius,
-          angle: 0
+          angle: 0,
+          rotation: rotation
         })
       });
     }

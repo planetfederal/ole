@@ -122,7 +122,7 @@ describe('StyleGenerator', function() {
         "style": "esriSMSSquare",
         "color": [76,115,0,255],
         "size": 8,
-        "angle": 0,
+        "angle": 180,
         "xoffset": 0,
         "yoffset": 0,
         "outline": {
@@ -135,6 +135,7 @@ describe('StyleGenerator', function() {
       var fill = image.getFill();
       var stroke = image.getStroke();
       expect(image).to.be.a(ol.style.RegularShape);
+      expect(image.getRotation()).to.be(4.71238898038469);
       expect(fill.getColor()).to.eql([76,115,0,1]);
       expect(stroke.getColor()).to.eql([152,230,0,1]);
       expect(stroke.getWidth()).to.eql(1/0.75);
