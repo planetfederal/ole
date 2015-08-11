@@ -7,7 +7,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.7.0/ol.css" type="text/css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.7.0/ol.js"></script>
-<script src="../dist/ol3-esri.js"></script>
+<script src="../dist/ole.js"></script>
 </head>
 <body>
 <div class="container-fluid">
@@ -84,7 +84,7 @@
         extent = ol.proj.get('EPSG:3857').getExtent();
       }
       map.getView().fit(extent, map.getSize());
-      ol3Esri.VectorLayerModifier.modifyLayer(response, vector, map.getView().getProjection());
+      ole.VectorLayerModifier.modifyLayer(response, vector, map.getView().getProjection());
       map.getLayers().forEach(function(lyr) {
         if (lyr instanceof ol.layer.Vector) {
           map.removeLayer(lyr);

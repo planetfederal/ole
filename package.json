@@ -1,17 +1,17 @@
 {
-  "name": "ol3-esri",
+  "name": "ole",
   "version": "0.1.0",
   "description": "Library to integrate OpenLayers 3 with Esri ArcGIS Server REST API",
   "main": "index.js",
   "scripts": {
-    "start": "watchify src/index.js --standalone ol3Esri -o dist/ol3-esri.js & st -nc",
-    "build": "browserify src/index.js --standalone ol3Esri -o dist/ol3-esri.js",
+    "start": "node tasks/createdist.js && watchify src/index.js --standalone ole -o dist/ole.js & st -nc",
+    "build": "node tasks/createdist.js && browserify src/index.js --standalone ole -o dist/ole.js",
     "lint": "eslint src",
     "test": "phantomjs --ssl-protocol=any --ignore-ssl-errors=true ./node_modules/mocha-phantomjs/lib/mocha-phantomjs.coffee test/index.html"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bartvde/ol3-esri.git"
+    "url": "https://github.com/bartvde/ole.git"
   },
   "keywords": [
     "openlayers",
@@ -22,10 +22,11 @@
   "author": "Boundless",
   "license": "BSD",
   "bugs": {
-    "url": "https://github.com/bartvde/ol3-esri/issues"
+    "url": "https://github.com/bartvde/ole/issues"
   },
-  "homepage": "https://github.com/bartvde/ol3-esri",
+  "homepage": "https://github.com/bartvde/ole",
   "devDependencies": {
+    "fs-extra": "0.12.0",
     "babelify": "^6.0.2",
     "browserify": "^9.0.8",
     "st": "^0.5.3",

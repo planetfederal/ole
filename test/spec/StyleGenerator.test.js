@@ -10,13 +10,13 @@ describe('StyleGenerator', function() {
 
   describe('#convertPointToPixel', function() {
     it('converts points correctly to pixels', function() {
-      expect(ol3Esri.StyleGenerator._convertPointToPixel(17)).to.be(17/0.75);
+      expect(ole.StyleGenerator._convertPointToPixel(17)).to.be(17/0.75);
     });
   });
 
   describe('#transformColor', function() { 
     it('converts color values correctly', function() { 
-      expect(ol3Esri.StyleGenerator._transformColor([255, 0, 0, 255])).to.eql([255, 0, 0, 1]);
+      expect(ole.StyleGenerator._transformColor([255, 0, 0, 255])).to.eql([255, 0, 0, 1]);
     });
   });
 
@@ -75,7 +75,7 @@ describe('StyleGenerator', function() {
         "maxScale": 7100,
         "where": ""
       }];
-      var styles = new ol3Esri.StyleGenerator()._convertLabelingInfo(labelingInfo, 'm');
+      var styles = new ole.StyleGenerator()._convertLabelingInfo(labelingInfo, 'm');
       var feature = new ol.Feature({'TAG': 'foo'});
       var style = styles[0].call(null, feature, 0.4)[0];
       expect(style.getText().getText()).to.be('foo');
@@ -102,7 +102,7 @@ describe('StyleGenerator', function() {
         "xoffset" : 0, 
         "yoffset" : 0
       };
-      var style = ol3Esri.StyleGenerator._convertEsriPMS(symbol);
+      var style = ole.StyleGenerator._convertEsriPMS(symbol);
       var iconStyle = style.getImage();
       expect(iconStyle.getRotation()).to.be(4.71238898038469);
       expect(iconStyle.getSrc()).to.be('data:' + symbol.contentType + ';base64, ' + symbol.imageData);
@@ -136,7 +136,7 @@ describe('StyleGenerator', function() {
          "decoration": "none"
        }
       };
-      var style = ol3Esri.StyleGenerator._convertEsriTS(symbol);
+      var style = ole.StyleGenerator._convertEsriTS(symbol);
       var text = style.getText();
       expect(text.getFont()).to.be('normal bold 12 px Arial');
       expect(text.getFill().getColor()).to.eql([78, 78, 78, 1]);
@@ -157,7 +157,7 @@ describe('StyleGenerator', function() {
         "color": [115,76,0,255],
         "width": 1
       };
-      var style = ol3Esri.StyleGenerator._convertEsriSLS(symbol);
+      var style = ole.StyleGenerator._convertEsriSLS(symbol);
       var stroke = style.getStroke();
       expect(stroke.getColor()).to.eql([115,76,0,1]);
       expect(stroke.getWidth()).to.be(1/0.75);
@@ -178,7 +178,7 @@ describe('StyleGenerator', function() {
           "width": 1
 	}
       };
-      var style = ol3Esri.StyleGenerator._convertEsriSFS(symbol);
+      var style = ole.StyleGenerator._convertEsriSFS(symbol);
       var fill = style.getFill();
       var stroke = style.getStroke();
       expect(fill.getColor()).to.eql([115,76,0,1]);
@@ -203,7 +203,7 @@ describe('StyleGenerator', function() {
           "width": 1
         }
       };
-      var style = ol3Esri.StyleGenerator._convertEsriSMS(symbol);
+      var style = ole.StyleGenerator._convertEsriSMS(symbol);
       var image = style.getImage();
       var fill = image.getFill();
       var stroke = image.getStroke();
@@ -286,7 +286,7 @@ describe('StyleGenerator', function() {
         "rotationType": "geographic",
         "rotationExpression": "[Rotation] * 2"
       };
-      var styleFn = new ol3Esri.StyleGenerator()._renderClassBreaks(renderer);
+      var styleFn = new ole.StyleGenerator()._renderClassBreaks(renderer);
       var feature = new ol.Feature({'Shape.area': 10.0});
       var style = styleFn.call(null, feature)[0];
       expect(style.getFill().getColor()).to.eql([236,252,204,1]);
@@ -341,7 +341,7 @@ describe('StyleGenerator', function() {
         "rotationType": "geographic",
         "rotationExpression": "[Rotation] * 2"
       };
-      var styleFn = new ol3Esri.StyleGenerator()._renderUniqueValue(renderer);
+      var styleFn = new ole.StyleGenerator()._renderUniqueValue(renderer);
       var feature = new ol.Feature({'SubtypeCD': '1'});
       var style = styleFn.call(null, feature)[0];
       expect(style.getStroke().getColor()).to.eql([76,0,163,1]);
@@ -373,7 +373,7 @@ describe('StyleGenerator', function() {
         "rotationType": "geographic",
         "rotationExpression": "[Rotation] * 2"
       };
-      var style = new ol3Esri.StyleGenerator()._renderSimple(renderer);
+      var style = new ole.StyleGenerator()._renderSimple(renderer);
       expect(style).to.be.a(ol.style.Style);
       var image = style.getImage();
       expect(image).to.be.a(ol.style.Circle);
@@ -389,7 +389,7 @@ describe('StyleGenerator', function() {
     var styles, layerInfo;
     beforeEach(function(done) {
       afterLoadJson('spec/data/affordable_housing.json', function(json) {
-        var generator = new ol3Esri.StyleGenerator();
+        var generator = new ole.StyleGenerator();
         layerInfo = JSON.parse(json);
         styles = generator.generateStyle(layerInfo, 'm');
         done();

@@ -18,7 +18,7 @@ describe('VectorLayerModifier', function() {
           transparency: 40
         }
       };
-      ol3Esri.VectorLayerModifier.modifyLayer(layerInfo, layer, ol.proj.get('EPSG:3857'));
+      ole.VectorLayerModifier.modifyLayer(layerInfo, layer, ol.proj.get('EPSG:3857'));
     });
     it('applies transparency', function() {
       expect(layer.getOpacity()).to.be(0.6);
