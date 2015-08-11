@@ -274,7 +274,10 @@ export default class StyleGenerator {
   }
   _renderUniqueValue(renderer) {
     var defaultSymbol = renderer.defaultSymbol;
-    var defaultStyle = this._converters[defaultSymbol.type].call(this, defaultSymbol);
+    var defaultStyle = [];
+    if (defaultSymbol) {
+      defaultStyle = [this._converters[defaultSymbol.type].call(this, defaultSymbol)];
+    }
     var field = renderer.field1;
     var infos = renderer.uniqueValueInfos;
     var me = this;
@@ -286,7 +289,7 @@ export default class StyleGenerator {
       }
       return function(feature) {
         var style = hash[feature.get(field)];
-        return style ? style : [defaultStyle];
+        return style ? style : defaultStyle;
       };
     }());
   }
