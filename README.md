@@ -22,6 +22,20 @@ Provides the following functionality:
     npm start
     http://127.0.0.1:1337/examples/
 
+## What is supported?
+
+# <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Symbol_Objects/02r3000000n5000000/">Symbol objects</a>
+  * Simple Marker Symbol: except for xoffset and yoffset
+  * Simple Line Symbol
+  * Simple Fill Symbol: except for style
+  * Picture Marker Symbol: except for xoffset and yoffset
+  * Text Symbol: except for backgroundColor, borderLineSize, borderLineColor, haloSize, haloColor, rightToLeft, kerning
+
+# <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Renderer_objects/02r30000019t000000/">Renderer objects</a>
+  * Simple renderer: except for rotationType, rotationExpression
+  * Unique value renderer: except for field2, field3, fieldDelimiter, defaultLabel, rotationType, rotationExpression
+  * Class breaks renderer: except for backgroundFillSymbol, rotationType, rotationExpression
+
 ## License
 
 Copyright 2015 Boundless Spatial, Inc.
