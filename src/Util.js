@@ -8,9 +8,6 @@ var utils = {
     var mpu = ol.proj.METERS_PER_UNIT[units];
     var inchesPerMeter = 39.37;
     return parseFloat(scale) / (mpu * inchesPerMeter * dpi);
-  },
-  isFunction(value) {
-    return (typeof value === "function");
   }
 };
 
