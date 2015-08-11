@@ -348,6 +348,9 @@ describe('StyleGenerator', function() {
       feature.set('SubtypeCD', '2');
       style = styleFn.call(null, feature)[0];
       expect(style.getStroke().getColor()).to.eql([115,76,0,1]);
+      feature.set('SubtypeCD', '3');
+      style = styleFn.call(null, feature)[0];
+      expect(style.getStroke().getColor()).to.eql([130,130,130,1]);
     });
   });
 

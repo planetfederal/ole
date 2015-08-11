@@ -234,7 +234,7 @@ export default class StyleGenerator {
   }
   _renderClassBreaks(renderer) {
     var defaultSymbol = renderer.defaultSymbol;
-    var defaultStyle = this._converters[defaultSymbol.type].call(this, renderer.defaultSymbol);
+    var defaultStyle = this._converters[defaultSymbol.type].call(this, defaultSymbol);
     var field = renderer.field;
     var classes = [];
     for (var i = 0, ii = renderer.classBreakInfos.length; i < ii; ++i) {
@@ -273,6 +273,8 @@ export default class StyleGenerator {
     }());
   }
   _renderUniqueValue(renderer) {
+    var defaultSymbol = renderer.defaultSymbol;
+    var defaultStyle = this._converters[defaultSymbol.type].call(this, defaultSymbol);
     var field = renderer.field1;
     var infos = renderer.uniqueValueInfos;
     var me = this;
@@ -283,7 +285,8 @@ export default class StyleGenerator {
         hash[info.value] = [me._converters[symbol.type].call(me, symbol)];
       }
       return function(feature) {
-        return hash[feature.get(field)];
+        var style = hash[feature.get(field)];
+        return style ? style: [defaultStyle];
       };
     }());
   }
