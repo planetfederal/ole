@@ -1,6 +1,10 @@
-# ol3-esri
+# ole
 
 Integration of OpenLayers 3 and Esri ArcGIS REST services.
+
+Provides the following functionality:
+  * translation of ArcGIS REST API styling to OpenLayers 3 styles
+  * automatic configuration of tile and image layers from the ArcGIS REST API
 
 ## Getting started
     npm install
