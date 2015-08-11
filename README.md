@@ -21,3 +21,9 @@ Provides the following functionality:
 ## Examples
     npm start
     http://127.0.0.1:1337/examples/
+
+## License
+
+Copyright 2015 Boundless Spatial, Inc.
+
+Licensed under the Apache License, Version 2.0: http://www.apache.org/licenses/LICENSE-2.0
