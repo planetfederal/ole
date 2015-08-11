@@ -373,7 +373,8 @@ describe('StyleGenerator', function() {
         "rotationType": "geographic",
         "rotationExpression": "[Rotation] * 2"
       };
-      var style = new ole.StyleGenerator()._renderSimple(renderer);
+      var styleFn = new ole.StyleGenerator()._renderSimple(renderer);
+      var style = styleFn.call()[0];
       expect(style).to.be.a(ol.style.Style);
       var image = style.getImage();
       expect(image).to.be.a(ol.style.Circle);
@@ -401,7 +402,7 @@ describe('StyleGenerator', function() {
       // size 15 points, 20 pixels
       // image width is 64x64
       // scale = 20/64
-      var style = styles[0];
+      var style = styles.call()[0];
       expect(style).to.be.a(ol.style.Style);
       var image = style.getImage();
       expect(image).to.be.a(ol.style.Icon);

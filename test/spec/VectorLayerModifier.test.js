@@ -28,7 +28,7 @@ describe('VectorLayerModifier', function() {
       expect(layer.getMaxResolution()).to.be(80.89104178208359);
     });
     it('sets the style on the layer', function() {
-      expect(layer.getStyle()[0].getFill().getColor()).to.eql([255,0,0,1]);
+      expect(layer.getStyle().call()[0].getFill().getColor()).to.eql([255,0,0,1]);
     });
   });
 

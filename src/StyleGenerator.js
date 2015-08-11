@@ -225,7 +225,12 @@ export default class StyleGenerator {
     }
   }
   _renderSimple(renderer) {
-    return this._converters[renderer.symbol.type].call(this, renderer.symbol);
+    var style = this._converters[renderer.symbol.type].call(this, renderer.symbol);
+    return (function() {
+      return function(feature) {
+        return [style];
+      }
+    }());
   }
   _renderClassBreaks(renderer) {
     var defaultSymbol = renderer.defaultSymbol;
@@ -284,16 +289,30 @@ export default class StyleGenerator {
   }
   generateStyle(layerInfo, mapUnits) {
     var drawingInfo = layerInfo.drawingInfo;
-    var styles = [];
+    var styleFunctions = [];
     var drawingInfoStyle = this._renderers[drawingInfo.renderer.type].call(this, drawingInfo.renderer);
     if (drawingInfoStyle !== undefined) {
-      styles.push(drawingInfoStyle);
+      styleFunctions.push(drawingInfoStyle);
     }
     if (layerInfo.labelingInfo) {
-      var labelingInfoStyles = this._convertLabelingInfo(layerInfo.labelingInfo, mapUnits);
-      return styles.concat(labelingInfoStyles);
+      var labelingInfoStyleFunctions = this._convertLabelingInfo(layerInfo.labelingInfo, mapUnits);
+      styleFunctions = styleFunctions.concat(labelingInfoStyleFunctions);
+    } 
+    if (styleFunctions.length === 1) {
+      return styleFunctions[0];
     } else {
-      return styles;
+      return (function() {
+        return function(feature, resolution) {
+          var styles = [];
+          for (var i = 0, ii = styleFunctions.length; i < ii; ++i) {
+            var result = styleFunctions[i].call(null, feature, resolution);
+            if (result) {
+              styles = styles.concat(result);
+            }
+          }
+          return styles;
+        };
+      }());
     }
   }
 }
