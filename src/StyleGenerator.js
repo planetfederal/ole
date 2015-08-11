@@ -227,9 +227,9 @@ export default class StyleGenerator {
   _renderSimple(renderer) {
     var style = this._converters[renderer.symbol.type].call(this, renderer.symbol);
     return (function() {
-      return function(feature) {
+      return function() {
         return [style];
-      }
+      };
     }());
   }
   _renderClassBreaks(renderer) {
@@ -286,7 +286,7 @@ export default class StyleGenerator {
       }
       return function(feature) {
         var style = hash[feature.get(field)];
-        return style ? style: [defaultStyle];
+        return style ? style : [defaultStyle];
       };
     }());
   }
@@ -300,7 +300,7 @@ export default class StyleGenerator {
     if (layerInfo.labelingInfo) {
       var labelingInfoStyleFunctions = this._convertLabelingInfo(layerInfo.labelingInfo, mapUnits);
       styleFunctions = styleFunctions.concat(labelingInfoStyleFunctions);
-    } 
+    }
     if (styleFunctions.length === 1) {
       return styleFunctions[0];
     } else {
