@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bartvde/ole.git"
+    "url": "https://github.com/boundlessgeo/ole.git"
   },
   "keywords": [
     "openlayers",
@@ -22,9 +22,9 @@
   "author": "Boundless",
   "license": "BSD",
   "bugs": {
-    "url": "https://github.com/bartvde/ole/issues"
+    "url": "https://github.com/boundlessgeo/ole/issues"
   },
-  "homepage": "https://github.com/bartvde/ole",
+  "homepage": "https://github.com/boundlessgeo/ole",
   "devDependencies": {
     "fs-extra": "0.12.0",
     "babelify": "^6.0.2",
