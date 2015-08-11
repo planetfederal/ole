@@ -26,21 +26,23 @@
   },
   "homepage": "https://github.com/boundlessgeo/ole",
   "devDependencies": {
-    "fs-extra": "0.12.0",
     "babelify": "^6.0.2",
     "browserify": "^9.0.8",
-    "st": "^0.5.3",
-    "watchify": "^3.2.0",
-    "expect.js": "0.3.1",
     "eslint": "^0.22.1",
+    "expect.js": "0.3.1",
+    "fs-extra": "0.12.0",
     "mocha": "1.21.5",
     "mocha-phantomjs": "3.5.1",
     "openlayers": "^3.7.0",
-    "phantomjs": "1.9.10"
+    "phantomjs": "1.9.10",
+    "st": "^0.5.3",
+    "uglifyify": "^3.0.1",
+    "watchify": "^3.2.0"
   },
   "browserify": {
     "transform": [
-      "babelify"
+      "babelify",
+      "uglifyify"
     ]
   }
 }
