@@ -1,4 +1,4 @@
-# ole
+# Olé
 
 Integration of OpenLayers 3 and Esri ArcGIS REST services.
 
