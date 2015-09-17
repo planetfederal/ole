@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/boundlessgeo/ole",
   "devDependencies": {
-    "babelify": "^6.0.2",
+    "babelify": "^6.3.0",
     "browserify": "^9.0.8",
     "eslint": "^0.22.1",
     "expect.js": "0.3.1",
