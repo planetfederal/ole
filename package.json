@@ -2,7 +2,7 @@
   "name": "ole",
   "version": "0.1.0",
   "description": "Library to integrate OpenLayers 3 with Esri ArcGIS Server REST API",
-  "main": "index.js",
+  "main": "dist/ole.js",
   "scripts": {
     "start": "node tasks/createdist.js && watchify src/index.js --standalone ole -o dist/ole-debug.js & st -nc",
     "build": "node tasks/createdist.js && browserify -t babelify -t uglifyify src/index.js --standalone ole -o dist/ole.js && browserify src/index.js --standalone ole -o dist/ole-debug.js",
@@ -20,7 +20,7 @@
     "rest"
   ],
   "author": "Boundless",
-  "license": "BSD",
+  "license": "Apache",
   "bugs": {
     "url": "https://github.com/boundlessgeo/ole/issues"
   },
