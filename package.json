@@ -5,7 +5,7 @@
   "main": "dist/ole.js",
   "scripts": {
     "start": "node tasks/createdist.js && watchify src/index.js --standalone ole -o dist/ole-debug.js & st -nc",
-    "build": "node tasks/createdist.js && browserify -p browserify-header -p browserify-derequire -t babelify -t uglifyify src/index.js --standalone ole -o dist/ole.js && browserify -p browserify-header -p browserify-derequire src/index.js --standalone ole -o dist/ole-debug.js",
+    "build": "node tasks/createdist.js && browserify -p browserify-header -p browserify-derequire -t babelify -p [minifyify --no-map] src/index.js --standalone ole -o dist/ole.js && browserify -p browserify-header -p browserify-derequire src/index.js --standalone ole -o dist/ole-debug.js",
     "lint": "eslint src",
     "test": "phantomjs --ssl-protocol=any --ignore-ssl-errors=true ./node_modules/mocha-phantomjs/lib/mocha-phantomjs.coffee test/index.html"
   },
@@ -33,12 +33,12 @@
     "eslint": "^0.22.1",
     "expect.js": "0.3.1",
     "fs-extra": "0.12.0",
+    "minifyify": "^7.0.6",
     "mocha": "1.21.5",
     "mocha-phantomjs": "3.5.1",
     "openlayers": "^3.7.0",
     "phantomjs": "1.9.10",
     "st": "^0.5.3",
-    "uglifyify": "^3.0.1",
     "watchify": "^3.2.0"
   },
   "browserify": {
