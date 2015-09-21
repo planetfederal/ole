@@ -1,4 +1,11 @@
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.ole = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+/*
+** Olé - Integration of OpenLayers 3 and Esri ArcGIS REST services
+** Copyright 2015 Boundless Spatial, Inc.
+** License: https://raw.githubusercontent.com/boundlessgeo/ole/master/LICENSE
+** Version: v0.1.0
+*/
+
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.ole = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 /* global ol */
 'use strict';
 
@@ -137,7 +144,7 @@ var LayerGenerator = (function () {
 exports['default'] = LayerGenerator;
 module.exports = exports['default'];
 
-},{}],2:[function(require,module,exports){
+},{}],2:[function(_dereq_,module,exports){
 /* global ol */
 'use strict';
 
@@ -151,7 +158,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'd
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-var _Util = require('./Util');
+var _Util = _dereq_('./Util');
 
 var _Util2 = _interopRequireDefault(_Util);
 
@@ -516,7 +523,7 @@ var StyleGenerator = (function () {
 exports['default'] = StyleGenerator;
 module.exports = exports['default'];
 
-},{"./Util":3}],3:[function(require,module,exports){
+},{"./Util":3}],3:[function(_dereq_,module,exports){
 /* global ol */
 "use strict";
 
@@ -538,7 +545,7 @@ var utils = {
 exports["default"] = utils;
 module.exports = exports["default"];
 
-},{}],4:[function(require,module,exports){
+},{}],4:[function(_dereq_,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -551,11 +558,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'd
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-var _StyleGenerator = require('./StyleGenerator');
+var _StyleGenerator = _dereq_('./StyleGenerator');
 
 var _StyleGenerator2 = _interopRequireDefault(_StyleGenerator);
 
-var _Util = require('./Util');
+var _Util = _dereq_('./Util');
 
 var _Util2 = _interopRequireDefault(_Util);
 
@@ -589,20 +596,26 @@ var VectorLayerModifier = (function () {
 exports['default'] = VectorLayerModifier;
 module.exports = exports['default'];
 
-},{"./StyleGenerator":2,"./Util":3}],5:[function(require,module,exports){
+},{"./StyleGenerator":2,"./Util":3}],5:[function(_dereq_,module,exports){
+/*
+** Olé - Integration of OpenLayers 3 and Esri ArcGIS REST services
+** Copyright 2015 Boundless Spatial, Inc.
+** License: https://raw.githubusercontent.com/boundlessgeo/ole/master/LICENSE
+** Version: v0.1.0
+*/
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _LayerGenerator = require('./LayerGenerator');
+var _LayerGenerator = _dereq_('./LayerGenerator');
 
 var _LayerGenerator2 = _interopRequireDefault(_LayerGenerator);
 
-var _StyleGenerator = require('./StyleGenerator');
+var _StyleGenerator = _dereq_('./StyleGenerator');
 
 var _StyleGenerator2 = _interopRequireDefault(_StyleGenerator);
 
-var _VectorLayerModifier = require('./VectorLayerModifier');
+var _VectorLayerModifier = _dereq_('./VectorLayerModifier');
 
 var _VectorLayerModifier2 = _interopRequireDefault(_VectorLayerModifier);
 

@@ -1,646 +1,215 @@
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.ole = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-/* global ol */
-'use strict';
+/*
+** Olé - Integration of OpenLayers 3 and Esri ArcGIS REST services
+** Copyright 2015 Boundless Spatial, Inc.
+** License: https://raw.githubusercontent.com/boundlessgeo/ole/master/LICENSE
+** Version: v0.1.0
+*/
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-var LayerGenerator = (function () {
-  function LayerGenerator(props) {
-    _classCallCheck(this, LayerGenerator);
-
-    this._config = props.config;
-    this._url = props.url;
-    this._resolutions = this._getResolutions();
-    this._projection = this._getProjection();
-    this._attribution = this._getAttribution();
-    this._fullExtent = this._getFullExtent();
-  }
-
-  _createClass(LayerGenerator, [{
-    key: 'getFullExtent',
-    value: function getFullExtent() {
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.ole = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
+"use strict";function _classCallCheck(t, e) {
+  if (!(t instanceof e)) throw new TypeError("Cannot call a class as a function");
+}Object.defineProperty(exports, "__esModule", { value: !0 });var _createClass = (function () {
+  function t(t, e) {
+    for (var i = 0; i < e.length; i++) {
+      var r = e[i];r.enumerable = r.enumerable || !1, r.configurable = !0, "value" in r && (r.writable = !0), Object.defineProperty(t, r.key, r);
+    }
+  }return function (e, i, r) {
+    return (i && t(e.prototype, i), r && t(e, r), e);
+  };
+})(),
+    LayerGenerator = (function () {
+  function t(e) {
+    _classCallCheck(this, t), this._config = e.config, this._url = e.url, this._resolutions = this._getResolutions(), this._projection = this._getProjection(), this._attribution = this._getAttribution(), this._fullExtent = this._getFullExtent();
+  }return (_createClass(t, [{ key: "getFullExtent", value: function value() {
       return this._fullExtent;
-    }
-  }, {
-    key: '_getFullExtent',
-    value: function _getFullExtent() {
+    } }, { key: "_getFullExtent", value: function value() {
       return [this._config.fullExtent.xmin, this._config.fullExtent.ymin, this._config.fullExtent.xmax, this._config.fullExtent.ymax];
-    }
-  }, {
-    key: 'getResolutions',
-    value: function getResolutions() {
+    } }, { key: "getResolutions", value: function value() {
       return this._resolutions;
-    }
-  }, {
-    key: '_getResolutions',
-    value: function _getResolutions() {
-      var tileInfo = this._config.tileInfo;
-      if (tileInfo) {
-        var resolutions = [];
-        for (var i = 0, ii = tileInfo.lods.length; i < ii; ++i) {
-          resolutions.push(tileInfo.lods[i].resolution);
-        }
-        return resolutions;
+    } }, { key: "_getResolutions", value: function value() {
+      var t = this._config.tileInfo;if (t) {
+        for (var e = [], i = 0, r = t.lods.length; r > i; ++i) e.push(t.lods[i].resolution);return e;
       }
-    }
-  }, {
-    key: '_getProjection',
-    value: function _getProjection() {
-      var epsg = 'EPSG:' + this._config.spatialReference.wkid;
-      var units = this._config.units === 'esriMeters' ? 'm' : 'degrees';
-      var projection = ol.proj.get(epsg) ? ol.proj.get(epsg) : new ol.proj.Projection({ code: epsg, units: units });
-      return projection;
-    }
-  }, {
-    key: 'getProjection',
-    value: function getProjection() {
+    } }, { key: "_getProjection", value: function value() {
+      var t = "EPSG:" + this._config.spatialReference.wkid,
+          e = "esriMeters" === this._config.units ? "m" : "degrees",
+          i = ol.proj.get(t) ? ol.proj.get(t) : new ol.proj.Projection({ code: t, units: e });return i;
+    } }, { key: "getProjection", value: function value() {
       return this._projection;
-    }
-  }, {
-    key: '_getAttribution',
-    value: function _getAttribution() {
-      return new ol.Attribution({
-        html: this._config.copyrightText
-      });
-    }
-  }, {
-    key: 'createArcGISRestSource',
-    value: function createArcGISRestSource() {
-      return new ol.source.TileArcGISRest({
-        url: this._url,
-        attributions: [this._attribution]
-      });
-    }
-  }, {
-    key: 'createXYZSource',
-    value: function createXYZSource() {
-      var tileInfo = this._config.tileInfo;
-      var tileSize = [tileInfo.width || tileInfo.cols, tileInfo.height || tileInfo.rows];
-      var tileOrigin = [tileInfo.origin.x, tileInfo.origin.y];
-      var urls;
-      var suffix = '/tile/{z}/{y}/{x}';
-      if (this._config.tileServers) {
-        urls = this._config.tileServers;
-        for (var i = 0, ii = urls.length; i < ii; ++i) {
-          urls[i] += suffix;
-        }
-      } else {
-        urls = [this._url += suffix];
-      }
-      var width = tileSize[0] * this._resolutions[0];
-      var height = tileSize[1] * this._resolutions[0];
-      var tileUrlFunction, extent, tileGrid;
-      if (this._projection.getCode() === 'EPSG:4326') {
-        tileUrlFunction = function (tileCoord) {
-          var url = urls.length === 1 ? urls[0] : urls[Math.floor(Math.random() * (urls.length - 0 + 1)) + 0];
-          return url.replace('{z}', (tileCoord[0] - 1).toString()).replace('{x}', tileCoord[1].toString()).replace('{y}', (-tileCoord[2] - 1).toString());
-        };
-      } else {
-        extent = [tileOrigin[0], tileOrigin[1] - height, tileOrigin[0] + width, tileOrigin[1]];
-        tileGrid = new ol.tilegrid.TileGrid({
-          origin: tileOrigin,
-          extent: extent,
-          resolutions: this._resolutions
-        });
-      }
-      return new ol.source.XYZ({
-        attributions: [this._attribution],
-        projection: this._projection,
-        tileSize: tileSize,
-        tileGrid: tileGrid,
-        tileUrlFunction: tileUrlFunction,
-        urls: urls
-      });
-    }
-  }, {
-    key: 'createLayer',
-    value: function createLayer() {
-      var layer = new ol.layer.Tile();
-      if (this._config.tileInfo) {
-        layer.setSource(this.createXYZSource());
-      } else {
-        layer.setSource(this.createArcGISRestSource());
-      }
-      return layer;
-    }
-  }]);
+    } }, { key: "_getAttribution", value: function value() {
+      return new ol.Attribution({ html: this._config.copyrightText });
+    } }, { key: "createArcGISRestSource", value: function value() {
+      return new ol.source.TileArcGISRest({ url: this._url, attributions: [this._attribution] });
+    } }, { key: "createXYZSource", value: function value() {
+      var t,
+          e = this._config.tileInfo,
+          i = [e.width || e.cols, e.height || e.rows],
+          r = [e.origin.x, e.origin.y],
+          n = "/tile/{z}/{y}/{x}";if (this._config.tileServers) {
+        t = this._config.tileServers;for (var o = 0, l = t.length; l > o; ++o) t[o] += n;
+      } else t = [this._url += n];var s,
+          u,
+          c,
+          a = i[0] * this._resolutions[0],
+          f = i[1] * this._resolutions[0];return ("EPSG:4326" === this._projection.getCode() ? s = function (e) {
+        var i = 1 === t.length ? t[0] : t[Math.floor(Math.random() * (t.length - 0 + 1)) + 0];return i.replace("{z}", (e[0] - 1).toString()).replace("{x}", e[1].toString()).replace("{y}", (-e[2] - 1).toString());
+      } : (u = [r[0], r[1] - f, r[0] + a, r[1]], c = new ol.tilegrid.TileGrid({ origin: r, extent: u, resolutions: this._resolutions })), new ol.source.XYZ({ attributions: [this._attribution], projection: this._projection, tileSize: i, tileGrid: c, tileUrlFunction: s, urls: t }));
+    } }, { key: "createLayer", value: function value() {
+      var t = new ol.layer.Tile();return (this._config.tileInfo ? t.setSource(this.createXYZSource()) : t.setSource(this.createArcGISRestSource()), t);
+    } }]), t);
+})();exports["default"] = LayerGenerator, module.exports = exports["default"];
 
-  return LayerGenerator;
-})();
-
-exports['default'] = LayerGenerator;
-module.exports = exports['default'];
-
-},{}],2:[function(require,module,exports){
-/* global ol */
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _createClass = (function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+},{}],2:[function(_dereq_,module,exports){
+"use strict";function _interopRequireDefault(e) {
+  return e && e.__esModule ? e : { "default": e };
+}function _classCallCheck(e, t) {
+  if (!(e instanceof t)) throw new TypeError("Cannot call a class as a function");
+}Object.defineProperty(exports, "__esModule", { value: !0 });var _createClass = (function () {
+  function e(e, t) {
+    for (var l = 0; l < t.length; l++) {
+      var n = t[l];n.enumerable = n.enumerable || !1, n.configurable = !0, "value" in n && (n.writable = !0), Object.defineProperty(e, n.key, n);
     }
-  }return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+  }return function (t, l, n) {
+    return (l && e(t.prototype, l), n && e(t, n), t);
   };
-})();
-
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { 'default': obj };
-}
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError('Cannot call a class as a function');
-  }
-}
-
-var _Util = require('./Util');
-
-var _Util2 = _interopRequireDefault(_Util);
-
-var StyleGenerator = (function () {
-  function StyleGenerator() {
-    _classCallCheck(this, StyleGenerator);
-
-    this._converters = {};
-    // TODO add support for picture fill symbol when ol3 supports it
-    // see: https://github.com/openlayers/ol3/issues/2208
-    this._converters.esriPMS = StyleGenerator._convertEsriPMS;
-    this._converters.esriSFS = StyleGenerator._convertEsriSFS;
-    this._converters.esriSLS = StyleGenerator._convertEsriSLS;
-    this._converters.esriSMS = StyleGenerator._convertEsriSMS;
-    this._converters.esriTS = StyleGenerator._convertEsriTS;
-    this._renderers = {};
-    this._renderers.uniqueValue = this._renderUniqueValue;
-    this._renderers.simple = this._renderSimple;
-    this._renderers.classBreaks = this._renderClassBreaks;
-  }
-
-  _createClass(StyleGenerator, [{
-    key: '_convertLabelingInfo',
-    value: function _convertLabelingInfo(labelingInfo, mapUnits) {
-      var styles = [];
-      for (var i = 0, ii = labelingInfo.length; i < ii; ++i) {
-        var labelExpression = labelingInfo[i].labelExpression;
-        // only limited support for label expressions
-        var field = labelExpression.substr(labelExpression.indexOf('[') + 1, labelExpression.indexOf(']') - 1);
-        var symbol = labelingInfo[i].symbol;
-        var maxScale = labelingInfo[i].maxScale;
-        var minScale = labelingInfo[i].minScale;
-        var minResolution = null;
-        if (maxScale !== 0) {
-          minResolution = _Util2['default'].getResolutionForScale(maxScale, mapUnits);
-        }
-        var maxResolution = null;
-        if (minScale !== 0) {
-          maxResolution = _Util2['default'].getResolutionForScale(minScale, mapUnits);
-        }
-        var style = this._converters[symbol.type].call(this, symbol);
-        styles.push((function () {
-          return function (feature, resolution) {
-            var visible = true;
-            if (this.minResolution !== null && this.maxResolution !== null) {
-              visible = resolution < this.maxResolution && resolution >= this.minResolution;
-            } else if (this.minResolution !== null) {
-              visible = resolution >= this.minResolution;
-            } else if (this.maxResolution !== null) {
-              visible = resolution < this.maxResolution;
-            }
-            if (visible) {
-              var value = feature.get(this.field);
-              this.style.getText().setText(value);
-              return [this.style];
+})(),
+    _Util = _dereq_("./Util"),
+    _Util2 = _interopRequireDefault(_Util),
+    StyleGenerator = (function () {
+  function e() {
+    _classCallCheck(this, e), this._converters = {}, this._converters.esriPMS = e._convertEsriPMS, this._converters.esriSFS = e._convertEsriSFS, this._converters.esriSLS = e._convertEsriSLS, this._converters.esriSMS = e._convertEsriSMS, this._converters.esriTS = e._convertEsriTS, this._renderers = {}, this._renderers.uniqueValue = this._renderUniqueValue, this._renderers.simple = this._renderSimple, this._renderers.classBreaks = this._renderClassBreaks;
+  }return (_createClass(e, [{ key: "_convertLabelingInfo", value: function value(e, t) {
+      for (var l = [], n = 0, r = e.length; r > n; ++n) {
+        var o = e[n].labelExpression,
+            i = o.substr(o.indexOf("[") + 1, o.indexOf("]") - 1),
+            s = e[n].symbol,
+            a = e[n].maxScale,
+            u = e[n].minScale,
+            c = null;0 !== a && (c = _Util2["default"].getResolutionForScale(a, t));var f = null;0 !== u && (f = _Util2["default"].getResolutionForScale(u, t));var v = this._converters[s.type].call(this, s);l.push((function () {
+          return function (e, t) {
+            var l = !0;if ((null !== this.minResolution && null !== this.maxResolution ? l = t < this.maxResolution && t >= this.minResolution : null !== this.minResolution ? l = t >= this.minResolution : null !== this.maxResolution && (l = t < this.maxResolution), l)) {
+              var n = e.get(this.field);return (this.style.getText().setText(n), [this.style]);
             }
           };
-        })().bind({
-          minResolution: minResolution,
-          maxResolution: maxResolution,
-          field: field,
-          style: style
-        }));
-      }
-      return styles;
-    }
-
-    /* convert an Esri Text Symbol */
-  }, {
-    key: '_renderSimple',
-    value: function _renderSimple(renderer) {
-      var style = this._converters[renderer.symbol.type].call(this, renderer.symbol);
-      return (function () {
+        })().bind({ minResolution: c, maxResolution: f, field: i, style: v }));
+      }return l;
+    } }, { key: "_renderSimple", value: function value(e) {
+      var t = this._converters[e.symbol.type].call(this, e.symbol);return (function () {
         return function () {
-          return [style];
+          return [t];
         };
       })();
-    }
-  }, {
-    key: '_renderClassBreaks',
-    value: function _renderClassBreaks(renderer) {
-      var defaultSymbol = renderer.defaultSymbol;
-      var defaultStyle = this._converters[defaultSymbol.type].call(this, defaultSymbol);
-      var field = renderer.field;
-      var classes = [];
-      for (var i = 0, ii = renderer.classBreakInfos.length; i < ii; ++i) {
-        var classBreakInfo = renderer.classBreakInfos[i];
-        var min;
-        if (classBreakInfo.classMinValue === null || classBreakInfo.classMinValue === undefined) {
-          if (i === 0) {
-            min = renderer.minValue;
-          } else {
-            min = renderer.classBreakInfos[i - 1].classMaxValue;
-          }
-        } else {
-          min = classBreakInfo.classMinValue;
-        }
-        var max = classBreakInfo.classMaxValue;
-        var symbol = classBreakInfo.symbol;
-        var style = this._converters[symbol.type].call(this, symbol);
-        classes.push({ min: min, max: max, style: style });
-      }
-      return (function () {
-        return function (feature) {
-          var value = feature.get(field);
-          for (i = 0, ii = classes.length; i < ii; ++i) {
-            var condition;
-            if (i === 0) {
-              condition = value >= classes[i].min && value <= classes[i].max;
-            } else {
-              condition = value > classes[i].min && value <= classes[i].max;
-            }
-            if (condition) {
-              return [classes[i].style];
-            }
-          }
-          return [defaultStyle];
+    } }, { key: "_renderClassBreaks", value: function value(e) {
+      for (var t = e.defaultSymbol, l = this._converters[t.type].call(this, t), n = e.field, r = [], o = 0, i = e.classBreakInfos.length; i > o; ++o) {
+        var s,
+            a = e.classBreakInfos[o];s = null === a.classMinValue || void 0 === a.classMinValue ? 0 === o ? e.minValue : e.classBreakInfos[o - 1].classMaxValue : a.classMinValue;var u = a.classMaxValue,
+            c = a.symbol,
+            f = this._converters[c.type].call(this, c);r.push({ min: s, max: u, style: f });
+      }return (function () {
+        return function (e) {
+          var t = e.get(n);for (o = 0, i = r.length; i > o; ++o) {
+            var s;if (s = 0 === o ? t >= r[o].min && t <= r[o].max : t > r[o].min && t <= r[o].max) return [r[o].style];
+          }return [l];
         };
       })();
-    }
-  }, {
-    key: '_renderUniqueValue',
-    value: function _renderUniqueValue(renderer) {
-      var defaultSymbol = renderer.defaultSymbol;
-      var defaultStyle = [];
-      if (defaultSymbol) {
-        defaultStyle = [this._converters[defaultSymbol.type].call(this, defaultSymbol)];
-      }
-      var field = renderer.field1;
-      var infos = renderer.uniqueValueInfos;
-      var me = this;
-      return (function () {
-        var hash = {};
-        for (var i = 0, ii = infos.length; i < ii; ++i) {
-          var info = infos[i],
-              symbol = info.symbol;
-          hash[info.value] = [me._converters[symbol.type].call(me, symbol)];
-        }
-        return function (feature) {
-          var style = hash[feature.get(field)];
-          return style ? style : defaultStyle;
+    } }, { key: "_renderUniqueValue", value: function value(e) {
+      var t = e.defaultSymbol,
+          l = [];t && (l = [this._converters[t.type].call(this, t)]);var n = e.field1,
+          r = e.uniqueValueInfos,
+          o = this;return (function () {
+        for (var e = {}, t = 0, i = r.length; i > t; ++t) {
+          var s = r[t],
+              a = s.symbol;e[s.value] = [o._converters[a.type].call(o, a)];
+        }return function (t) {
+          var r = e[t.get(n)];return r ? r : l;
         };
       })();
-    }
-  }, {
-    key: 'generateStyle',
-    value: function generateStyle(layerInfo, mapUnits) {
-      var drawingInfo = layerInfo.drawingInfo;
-      var styleFunctions = [];
-      var drawingInfoStyle = this._renderers[drawingInfo.renderer.type].call(this, drawingInfo.renderer);
-      if (drawingInfoStyle !== undefined) {
-        styleFunctions.push(drawingInfoStyle);
-      }
-      if (layerInfo.labelingInfo) {
-        var labelingInfoStyleFunctions = this._convertLabelingInfo(layerInfo.labelingInfo, mapUnits);
-        styleFunctions = styleFunctions.concat(labelingInfoStyleFunctions);
-      }
-      if (styleFunctions.length === 1) {
-        return styleFunctions[0];
-      } else {
-        return (function () {
-          return function (feature, resolution) {
-            var styles = [];
-            for (var i = 0, ii = styleFunctions.length; i < ii; ++i) {
-              var result = styleFunctions[i].call(null, feature, resolution);
-              if (result) {
-                styles = styles.concat(result);
-              }
-            }
-            return styles;
-          };
-        })();
-      }
-    }
-  }], [{
-    key: '_convertPointToPixel',
-    value: function _convertPointToPixel(point) {
-      return point / 0.75;
-    }
-  }, {
-    key: '_transformColor',
-    value: function _transformColor(color) {
-      // alpha channel is different, runs from 0-255 but in ol3 from 0-1
-      return [color[0], color[1], color[2], color[3] / 255];
-    }
-  }, {
-    key: '_convertEsriTS',
-    value: function _convertEsriTS(symbol) {
-      var rotation = _Util2['default'].isDefinedAndNotNull(symbol.angle) ? StyleGenerator._transformAngle(symbol.angle) : undefined;
-      var text = _Util2['default'].isDefinedAndNotNull(symbol.text) ? symbol.text : undefined;
-      return new ol.style.Style({
-        text: new ol.style.Text({
-          fill: new ol.style.Fill({ color: StyleGenerator._transformColor(symbol.color) }),
-          font: symbol.font.style + ' ' + symbol.font.weight + ' ' + symbol.font.size + ' px ' + symbol.font.family,
-          textBaseline: symbol.verticalAlignment,
-          textAlign: symbol.horizontalAlignment,
-          offsetX: StyleGenerator._convertPointToPixel(symbol.xoffset),
-          offsetY: StyleGenerator._convertPointToPixel(symbol.yoffset),
-          rotation: rotation,
-          text: text
-        })
-      });
-    }
+    } }, { key: "generateStyle", value: function value(e, t) {
+      var l = e.drawingInfo,
+          n = [],
+          r = this._renderers[l.renderer.type].call(this, l.renderer);if ((void 0 !== r && n.push(r), e.labelingInfo)) {
+        var o = this._convertLabelingInfo(e.labelingInfo, t);n = n.concat(o);
+      }return 1 === n.length ? n[0] : (function () {
+        return function (e, t) {
+          for (var l = [], r = 0, o = n.length; o > r; ++r) {
+            var i = n[r].call(null, e, t);i && (l = l.concat(i));
+          }return l;
+        };
+      })();
+    } }], [{ key: "_convertPointToPixel", value: function value(e) {
+      return e / .75;
+    } }, { key: "_transformColor", value: function value(e) {
+      return [e[0], e[1], e[2], e[3] / 255];
+    } }, { key: "_convertEsriTS", value: function value(t) {
+      var l = _Util2["default"].isDefinedAndNotNull(t.angle) ? e._transformAngle(t.angle) : void 0,
+          n = _Util2["default"].isDefinedAndNotNull(t.text) ? t.text : void 0;return new ol.style.Style({ text: new ol.style.Text({ fill: new ol.style.Fill({ color: e._transformColor(t.color) }), font: t.font.style + " " + t.font.weight + " " + t.font.size + " px " + t.font.family, textBaseline: t.verticalAlignment, textAlign: t.horizontalAlignment, offsetX: e._convertPointToPixel(t.xoffset), offsetY: e._convertPointToPixel(t.yoffset), rotation: l, text: n }) });
+    } }, { key: "_convertEsriPMS", value: function value(t) {
+      var l = Math.ceil(e._convertPointToPixel(t.width)),
+          n = document.createElement("img");n.src = "data:" + t.contentType + ";base64, " + t.imageData;var r = _Util2["default"].isDefinedAndNotNull(t.angle) ? e._transformAngle(t.angle) : void 0;return new ol.style.Style({ image: new ol.style.Icon({ img: n, imgSize: [n.width, n.height], scale: l / n.width, rotation: r }) });
+    } }, { key: "_convertEsriSFS", value: function value(t) {
+      var l = new ol.style.Fill({ color: e._transformColor(t.color) }),
+          n = t.outline ? e._convertOutline(t.outline) : void 0;return new ol.style.Style({ fill: l, stroke: n });
+    } }, { key: "_convertOutline", value: function value(t) {
+      var l,
+          n = e._transformColor(t.color);return ("esriSLSDash" === t.style ? l = [5] : "esriSLSDashDot" === t.style ? l = [5, 5, 1, 2] : "esriSLSDashDotDot" === t.style ? l = [5, 5, 1, 2, 1, 2] : "esriSLSDot" === t.style ? l = [1, 2] : "esriSLSNull" === t.style && (n[3] = 0), new ol.style.Stroke({ color: n, lineDash: l, width: e._convertPointToPixel(t.width) }));
+    } }, { key: "_convertEsriSLS", value: function value(t) {
+      return new ol.style.Style({ stroke: e._convertOutline(t) });
+    } }, { key: "_transformAngle", value: function value(e) {
+      var t = e * Math.PI / 180,
+          l = -t + Math.PI / 2;return 0 > l ? 2 * Math.PI + l : l;
+    } }, { key: "_convertEsriSMS", value: function value(t) {
+      var l = new ol.style.Fill({ color: e._transformColor(t.color) }),
+          n = t.outline ? e._convertOutline(t.outline) : void 0,
+          r = e._convertPointToPixel(t.size) / 2,
+          o = _Util2["default"].isDefinedAndNotNull(t.angle) ? e._transformAngle(t.angle) : void 0;return "esriSMSCircle" === t.style ? new ol.style.Style({ image: new ol.style.Circle({ radius: r, fill: l, stroke: n }) }) : "esriSMSCross" === t.style ? new ol.style.Style({ image: new ol.style.RegularShape({ fill: l, stroke: n, points: 4, radius: r, radius2: 0, angle: 0, rotation: o }) }) : "esriSMSDiamond" === t.style ? new ol.style.Style({ image: new ol.style.RegularShape({ fill: l, stroke: n, points: 4, radius: r, rotation: o }) }) : "esriSMSSquare" === t.style ? new ol.style.Style({ image: new ol.style.RegularShape({ fill: l, stroke: n, points: 4, radius: r, angle: Math.PI / 4, rotation: o }) }) : "esriSMSX" === t.style ? new ol.style.Style({ image: new ol.style.RegularShape({ fill: l, stroke: n, points: 4, radius: r, radius2: 0, angle: Math.PI / 4, rotation: o }) }) : "esriSMSTriangle" === t.style ? new ol.style.Style({ image: new ol.style.RegularShape({ fill: l, stroke: n, points: 3, radius: r, angle: 0, rotation: o }) }) : void 0;
+    } }]), e);
+})();exports["default"] = StyleGenerator, module.exports = exports["default"];
 
-    /* convert an Esri Picture Marker Symbol */
-  }, {
-    key: '_convertEsriPMS',
-    value: function _convertEsriPMS(symbol) {
-      var width = Math.ceil(StyleGenerator._convertPointToPixel(symbol.width));
-      var img = document.createElement('img');
-      img.src = 'data:' + symbol.contentType + ';base64, ' + symbol.imageData;
-      var rotation = _Util2['default'].isDefinedAndNotNull(symbol.angle) ? StyleGenerator._transformAngle(symbol.angle) : undefined;
-      return new ol.style.Style({
-        image: new ol.style.Icon({
-          img: img,
-          imgSize: [img.width, img.height],
-          scale: width / img.width,
-          rotation: rotation
-        })
-      });
+},{"./Util":3}],3:[function(_dereq_,module,exports){
+"use strict";Object.defineProperty(exports, "__esModule", { value: !0 });var utils = { isDefinedAndNotNull: function isDefinedAndNotNull(e) {
+    return void 0 !== e && null !== e;
+  }, getResolutionForScale: function getResolutionForScale(e, t) {
+    var o = 25.4 / .28,
+        r = ol.proj.METERS_PER_UNIT[t],
+        l = 39.37;return parseFloat(e) / (r * l * o);
+  } };exports["default"] = utils, module.exports = exports["default"];
+
+},{}],4:[function(_dereq_,module,exports){
+"use strict";function _interopRequireDefault(e) {
+  return e && e.__esModule ? e : { "default": e };
+}function _classCallCheck(e, t) {
+  if (!(e instanceof t)) throw new TypeError("Cannot call a class as a function");
+}Object.defineProperty(exports, "__esModule", { value: !0 });var _createClass = (function () {
+  function e(e, t) {
+    for (var r = 0; r < t.length; r++) {
+      var l = t[r];l.enumerable = l.enumerable || !1, l.configurable = !0, "value" in l && (l.writable = !0), Object.defineProperty(e, l.key, l);
     }
-
-    /* convert an Esri Simple Fill Symbol */
-  }, {
-    key: '_convertEsriSFS',
-    value: function _convertEsriSFS(symbol) {
-      // there is no support in openlayers currently for fill patterns, so style is not interpreted
-      var fill = new ol.style.Fill({
-        color: StyleGenerator._transformColor(symbol.color)
-      });
-      var stroke = symbol.outline ? StyleGenerator._convertOutline(symbol.outline) : undefined;
-      return new ol.style.Style({
-        fill: fill,
-        stroke: stroke
-      });
-    }
-  }, {
-    key: '_convertOutline',
-    value: function _convertOutline(outline) {
-      var lineDash;
-      var color = StyleGenerator._transformColor(outline.color);
-      if (outline.style === 'esriSLSDash') {
-        lineDash = [5];
-      } else if (outline.style === 'esriSLSDashDot') {
-        lineDash = [5, 5, 1, 2];
-      } else if (outline.style === 'esriSLSDashDotDot') {
-        lineDash = [5, 5, 1, 2, 1, 2];
-      } else if (outline.style === 'esriSLSDot') {
-        lineDash = [1, 2];
-      } else if (outline.style === 'esriSLSNull') {
-        // line not visible, make color fully transparent
-        color[3] = 0;
-      }
-      return new ol.style.Stroke({
-        color: color,
-        lineDash: lineDash,
-        width: StyleGenerator._convertPointToPixel(outline.width)
-      });
-    }
-
-    /* convert an Esri Simple Line Symbol */
-  }, {
-    key: '_convertEsriSLS',
-    value: function _convertEsriSLS(symbol) {
-      return new ol.style.Style({
-        stroke: StyleGenerator._convertOutline(symbol)
-      });
-    }
-  }, {
-    key: '_transformAngle',
-    value: function _transformAngle(angle) {
-      var normalRad = angle * Math.PI / 180;
-      var ol3Rad = -normalRad + Math.PI / 2;
-      if (ol3Rad < 0) {
-        return 2 * Math.PI + ol3Rad;
-      } else {
-        return ol3Rad;
-      }
-    }
-
-    /* convert an Esri Simple Marker Symbol */
-  }, {
-    key: '_convertEsriSMS',
-    value: function _convertEsriSMS(symbol) {
-      var fill = new ol.style.Fill({
-        color: StyleGenerator._transformColor(symbol.color)
-      });
-      var stroke = symbol.outline ? StyleGenerator._convertOutline(symbol.outline) : undefined;
-      var radius = StyleGenerator._convertPointToPixel(symbol.size) / 2;
-      var rotation = _Util2['default'].isDefinedAndNotNull(symbol.angle) ? StyleGenerator._transformAngle(symbol.angle) : undefined;
-      if (symbol.style === 'esriSMSCircle') {
-        return new ol.style.Style({
-          image: new ol.style.Circle({
-            radius: radius,
-            fill: fill,
-            stroke: stroke
-          })
-        });
-      } else if (symbol.style === 'esriSMSCross') {
-        return new ol.style.Style({
-          image: new ol.style.RegularShape({
-            fill: fill,
-            stroke: stroke,
-            points: 4,
-            radius: radius,
-            radius2: 0,
-            angle: 0,
-            rotation: rotation
-          })
-        });
-      } else if (symbol.style === 'esriSMSDiamond') {
-        return new ol.style.Style({
-          image: new ol.style.RegularShape({
-            fill: fill,
-            stroke: stroke,
-            points: 4,
-            radius: radius,
-            rotation: rotation
-          })
-        });
-      } else if (symbol.style === 'esriSMSSquare') {
-        return new ol.style.Style({
-          image: new ol.style.RegularShape({
-            fill: fill,
-            stroke: stroke,
-            points: 4,
-            radius: radius,
-            angle: Math.PI / 4,
-            rotation: rotation
-          })
-        });
-      } else if (symbol.style === 'esriSMSX') {
-        return new ol.style.Style({
-          image: new ol.style.RegularShape({
-            fill: fill,
-            stroke: stroke,
-            points: 4,
-            radius: radius,
-            radius2: 0,
-            angle: Math.PI / 4,
-            rotation: rotation
-          })
-        });
-      } else if (symbol.style === 'esriSMSTriangle') {
-        return new ol.style.Style({
-          image: new ol.style.RegularShape({
-            fill: fill,
-            stroke: stroke,
-            points: 3,
-            radius: radius,
-            angle: 0,
-            rotation: rotation
-          })
-        });
-      }
-    }
-  }]);
-
-  return StyleGenerator;
-})();
-
-exports['default'] = StyleGenerator;
-module.exports = exports['default'];
-
-},{"./Util":3}],3:[function(require,module,exports){
-/* global ol */
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var utils = {
-  isDefinedAndNotNull: function isDefinedAndNotNull(value) {
-    return value !== undefined && value !== null;
-  },
-  getResolutionForScale: function getResolutionForScale(scale, units) {
-    var dpi = 25.4 / 0.28;
-    var mpu = ol.proj.METERS_PER_UNIT[units];
-    var inchesPerMeter = 39.37;
-    return parseFloat(scale) / (mpu * inchesPerMeter * dpi);
-  }
-};
-
-exports["default"] = utils;
-module.exports = exports["default"];
-
-},{}],4:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _createClass = (function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+  }return function (t, r, l) {
+    return (r && e(t.prototype, r), l && e(t, l), t);
   };
-})();
+})(),
+    _StyleGenerator = _dereq_("./StyleGenerator"),
+    _StyleGenerator2 = _interopRequireDefault(_StyleGenerator),
+    _Util = _dereq_("./Util"),
+    _Util2 = _interopRequireDefault(_Util),
+    VectorLayerModifier = (function () {
+  function e() {
+    _classCallCheck(this, e);
+  }return (_createClass(e, null, [{ key: "modifyLayer", value: function value(e, t, r) {
+      var l = new _StyleGenerator2["default"](),
+          a = e.drawingInfo.transparency;_Util2["default"].isDefinedAndNotNull(a) && t.setOpacity((100 - a) / 100);var n = r.getUnits();t.setStyle(l.generateStyle(e, n)), e.minScale && t.setMaxResolution(_Util2["default"].getResolutionForScale(e.minScale, n)), e.maxScale && t.setMinResolution(_Util2["default"].getResolutionForScale(e.maxScale, n));
+    } }]), e);
+})();exports["default"] = VectorLayerModifier, module.exports = exports["default"];
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { 'default': obj };
-}
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError('Cannot call a class as a function');
-  }
-}
-
-var _StyleGenerator = require('./StyleGenerator');
-
-var _StyleGenerator2 = _interopRequireDefault(_StyleGenerator);
-
-var _Util = require('./Util');
-
-var _Util2 = _interopRequireDefault(_Util);
-
-var VectorLayerModifier = (function () {
-  function VectorLayerModifier() {
-    _classCallCheck(this, VectorLayerModifier);
-  }
-
-  _createClass(VectorLayerModifier, null, [{
-    key: 'modifyLayer',
-    value: function modifyLayer(layerInfo, layer, mapProjection) {
-      var styleGenerator = new _StyleGenerator2['default']();
-      var transparency = layerInfo.drawingInfo.transparency;
-      if (_Util2['default'].isDefinedAndNotNull(transparency)) {
-        layer.setOpacity((100 - transparency) / 100);
-      }
-      var mapUnits = mapProjection.getUnits();
-      layer.setStyle(styleGenerator.generateStyle(layerInfo, mapUnits));
-      if (layerInfo.minScale) {
-        layer.setMaxResolution(_Util2['default'].getResolutionForScale(layerInfo.minScale, mapUnits));
-      }
-      if (layerInfo.maxScale) {
-        layer.setMinResolution(_Util2['default'].getResolutionForScale(layerInfo.maxScale, mapUnits));
-      }
-    }
-  }]);
-
-  return VectorLayerModifier;
-})();
-
-exports['default'] = VectorLayerModifier;
-module.exports = exports['default'];
-
-},{"./StyleGenerator":2,"./Util":3}],5:[function(require,module,exports){
-'use strict';
-
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { 'default': obj };
-}
-
-var _LayerGenerator = require('./LayerGenerator');
-
-var _LayerGenerator2 = _interopRequireDefault(_LayerGenerator);
-
-var _StyleGenerator = require('./StyleGenerator');
-
-var _StyleGenerator2 = _interopRequireDefault(_StyleGenerator);
-
-var _VectorLayerModifier = require('./VectorLayerModifier');
-
-var _VectorLayerModifier2 = _interopRequireDefault(_VectorLayerModifier);
-
-module.exports = {
-  LayerGenerator: _LayerGenerator2['default'],
-  StyleGenerator: _StyleGenerator2['default'],
-  VectorLayerModifier: _VectorLayerModifier2['default']
-};
+},{"./StyleGenerator":2,"./Util":3}],5:[function(_dereq_,module,exports){
+"use strict";function _interopRequireDefault(e) {
+  return e && e.__esModule ? e : { "default": e };
+}var _LayerGenerator = _dereq_("./LayerGenerator"),
+    _LayerGenerator2 = _interopRequireDefault(_LayerGenerator),
+    _StyleGenerator = _dereq_("./StyleGenerator"),
+    _StyleGenerator2 = _interopRequireDefault(_StyleGenerator),
+    _VectorLayerModifier = _dereq_("./VectorLayerModifier"),
+    _VectorLayerModifier2 = _interopRequireDefault(_VectorLayerModifier);module.exports = { LayerGenerator: _LayerGenerator2["default"], StyleGenerator: _StyleGenerator2["default"], VectorLayerModifier: _VectorLayerModifier2["default"] };
 
 },{"./LayerGenerator":1,"./StyleGenerator":2,"./VectorLayerModifier":4}]},{},[5])(5)
 });
