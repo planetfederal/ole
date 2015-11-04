@@ -22,55 +22,55 @@
 
 </div>
 <script>
-var map;
-
-document.getElementById('get-caps').addEventListener('click', function() {
-  var capsUrl = document.getElementById('caps-url').value;
-  if (capsUrl.charAt(capsUrl.length - 1) === '?') {
-    capsUrl = capsUrl.substring(0, capsUrl.length - 1);
-  }
-  $.ajax({
-    url: capsUrl,
-    jsonp: 'callback',
-    dataType: 'jsonp',
-    data: {
-      f: 'json'
-    },
-    success: function(config) {
-      if (config.error) {
-        alert(config.error.message + '\n' +
-            config.error.details.join('\n'));
-      } else {
-        var generator = new ole.LayerGenerator({config: config, url: capsUrl});
-        var layer = generator.createLayer();
-        var fullExtent = generator.getFullExtent();
-        var resolutions = generator.getResolutions();
-        var projection = generator.getProjection();
-        if (!map) {
-          map = new ol.Map({
-            controls: ol.control.defaults().extend([
-              new ol.control.MousePosition()]),
-            layers: [layer],
-            target: 'map',
-            view: new ol.View({
+(function() {
+  var map;
+  document.getElementById('get-caps').addEventListener('click', function() {
+    var capsUrl = document.getElementById('caps-url').value;
+    if (capsUrl.charAt(capsUrl.length - 1) === '?') {
+      capsUrl = capsUrl.substring(0, capsUrl.length - 1);
+    }
+    $.ajax({
+      url: capsUrl,
+      jsonp: 'callback',
+      dataType: 'jsonp',
+      data: {
+        f: 'json'
+      },
+      success: function(config) {
+        if (config.error) {
+          alert(config.error.message + '\n' +
+              config.error.details.join('\n'));
+        } else {
+          var generator = new ole.LayerGenerator({config: config, url: capsUrl});
+          var layer = generator.createLayer();
+          var fullExtent = generator.getFullExtent();
+          var resolutions = generator.getResolutions();
+          var projection = generator.getProjection();
+          if (!map) {
+            map = new ol.Map({
+              controls: ol.control.defaults().extend([
+                new ol.control.MousePosition()]),
+              layers: [layer],
+              target: 'map',
+              view: new ol.View({
+                resolutions: resolutions,
+                projection: projection
+              })
+            });
+          } else {
+            map.getLayers().clear();
+            map.setView(new ol.View({
               resolutions: resolutions,
               projection: projection
-            })
-          });
-        } else {
-          map.getLayers().clear();
-          map.setView(new ol.View({
-            resolutions: resolutions,
-            projection: projection
-          }));
-          map.addLayer(layer);
+            }));
+            map.addLayer(layer);
+          }
+          map.getView().fit(fullExtent, map.getSize());
         }
-        map.getView().fit(fullExtent, map.getSize());
       }
-    }
+    });
   });
-});
-
+})();
 </script>
 </body>
 </html>
