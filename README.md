@@ -22,6 +22,13 @@ Provides the following functionality:
     npm start
     http://127.0.0.1:1337/examples/
 
+## Using npm
+
+There is no package on npmjs.com but you can use a git type url for instance:
+    "dependencies": {
+      "ole": "boundlessgeo/ole#v0.4.0"
+    }
+
 ## What is supported?
 
 ### <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Symbol_Objects/02r3000000n5000000/">Symbol objects</a>
