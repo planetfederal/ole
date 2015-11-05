@@ -20,7 +20,7 @@
     "rest"
   ],
   "author": "Boundless",
-  "license": "Apache",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/boundlessgeo/ole/issues"
   },
