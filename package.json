@@ -4,8 +4,12 @@
   "description": "Library to integrate OpenLayers 3 with Esri ArcGIS Server REST API",
   "main": "dist/ole.js",
   "scripts": {
-    "start": "watchify src/index.js --standalone ole -o examples/ole-debug.js & st -nc",
-    "build": "browserify -p browserify-header -p browserify-derequire -t babelify -p [minifyify --no-map] src/index.js --standalone ole -o dist/ole.js && browserify -p browserify-header -p browserify-derequire src/index.js --standalone ole -o dist/ole-debug.js",
+    "start:ole": "node_modules/.bin/watchify --standalone ole -o examples/ole-debug.js",
+    "start:server": "node_modules/.bin/st -nc",
+    "start": "node_modules/.bin/npm-run-all --parallel start:ole start:server",
+    "build:min": "node_modules/.bin/browserify -p browserify-header -p browserify-derequire -t babelify -p [minifyify --no-map] src/index.js --standalone ole -o dist/ole.js",
+    "build:debug": "node_modules/.bin/browserify -p browserify-header -p browserify-derequire src/index.js --standalone ole -o dist/ole-debug.js",
+    "build": "node_modules/.bin/npm-run-all --parallel build:min build:debug",
     "lint": "eslint src",
     "test": "phantomjs --ssl-protocol=any --ignore-ssl-errors=true ./node_modules/mocha-phantomjs/lib/mocha-phantomjs.coffee test/index.html"
   },
@@ -38,6 +42,7 @@
     "minifyify": "^7.0.6",
     "mocha": "1.21.5",
     "mocha-phantomjs": "3.5.1",
+    "npm-run-all": "^1.2.11",
     "openlayers": "^3.7.0",
     "phantomjs": "1.9.10",
     "st": "^0.5.3",
