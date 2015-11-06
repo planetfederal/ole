@@ -43,7 +43,7 @@
     "mocha": "1.21.5",
     "mocha-phantomjs": "3.5.1",
     "npm-run-all": "^1.2.11",
-    "openlayers": "^3.7.0",
+    "openlayers": "^3.10.1",
     "phantomjs": "1.9.10",
     "st": "^0.5.3",
     "watchify": "^3.2.0"
