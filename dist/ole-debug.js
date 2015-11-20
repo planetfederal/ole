@@ -2,20 +2,21 @@
 ** Olé - Integration of OpenLayers 3 and Esri ArcGIS REST services
 ** Copyright 2015 Boundless Spatial, Inc.
 ** License: https://raw.githubusercontent.com/boundlessgeo/ole/master/LICENSE
-** Version: v0.5.0
+** Version: v0.6.0
 */
 
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.ole = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
-/* global ol */
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+/* global ol */
 
 var LayerGenerator = (function () {
   function LayerGenerator(props) {
@@ -141,26 +142,24 @@ var LayerGenerator = (function () {
   return LayerGenerator;
 })();
 
-exports['default'] = LayerGenerator;
-module.exports = exports['default'];
+exports.default = LayerGenerator;
 
 },{}],2:[function(_dereq_,module,exports){
-/* global ol */
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })(); /* global ol */
+
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var _Util = _dereq_('./Util');
 
 var _Util2 = _interopRequireDefault(_Util);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var StyleGenerator = (function () {
   function StyleGenerator() {
@@ -193,11 +192,11 @@ var StyleGenerator = (function () {
         var minScale = labelingInfo[i].minScale;
         var minResolution = null;
         if (maxScale !== 0) {
-          minResolution = _Util2['default'].getResolutionForScale(maxScale, mapUnits);
+          minResolution = _Util2.default.getResolutionForScale(maxScale, mapUnits);
         }
         var maxResolution = null;
         if (minScale !== 0) {
-          maxResolution = _Util2['default'].getResolutionForScale(minScale, mapUnits);
+          maxResolution = _Util2.default.getResolutionForScale(minScale, mapUnits);
         }
         var style = this._converters[symbol.type].call(this, symbol);
         styles.push((function () {
@@ -225,8 +224,8 @@ var StyleGenerator = (function () {
       }
       return styles;
     }
-
     /* convert an Esri Text Symbol */
+
   }, {
     key: '_renderSimple',
     value: function _renderSimple(renderer) {
@@ -347,8 +346,8 @@ var StyleGenerator = (function () {
   }, {
     key: '_convertEsriTS',
     value: function _convertEsriTS(symbol) {
-      var rotation = _Util2['default'].isDefinedAndNotNull(symbol.angle) ? StyleGenerator._transformAngle(symbol.angle) : undefined;
-      var text = _Util2['default'].isDefinedAndNotNull(symbol.text) ? symbol.text : undefined;
+      var rotation = _Util2.default.isDefinedAndNotNull(symbol.angle) ? StyleGenerator._transformAngle(symbol.angle) : undefined;
+      var text = _Util2.default.isDefinedAndNotNull(symbol.text) ? symbol.text : undefined;
       return new ol.style.Style({
         text: new ol.style.Text({
           fill: new ol.style.Fill({ color: StyleGenerator._transformColor(symbol.color) }),
@@ -362,15 +361,15 @@ var StyleGenerator = (function () {
         })
       });
     }
-
     /* convert an Esri Picture Marker Symbol */
+
   }, {
     key: '_convertEsriPMS',
     value: function _convertEsriPMS(symbol) {
       var width = Math.ceil(StyleGenerator._convertPointToPixel(symbol.width));
       var img = document.createElement('img');
       img.src = 'data:' + symbol.contentType + ';base64, ' + symbol.imageData;
-      var rotation = _Util2['default'].isDefinedAndNotNull(symbol.angle) ? StyleGenerator._transformAngle(symbol.angle) : undefined;
+      var rotation = _Util2.default.isDefinedAndNotNull(symbol.angle) ? StyleGenerator._transformAngle(symbol.angle) : undefined;
       return new ol.style.Style({
         image: new ol.style.Icon({
           img: img,
@@ -380,8 +379,8 @@ var StyleGenerator = (function () {
         })
       });
     }
-
     /* convert an Esri Simple Fill Symbol */
+
   }, {
     key: '_convertEsriSFS',
     value: function _convertEsriSFS(symbol) {
@@ -418,8 +417,8 @@ var StyleGenerator = (function () {
         width: StyleGenerator._convertPointToPixel(outline.width)
       });
     }
-
     /* convert an Esri Simple Line Symbol */
+
   }, {
     key: '_convertEsriSLS',
     value: function _convertEsriSLS(symbol) {
@@ -438,8 +437,8 @@ var StyleGenerator = (function () {
         return ol3Rad;
       }
     }
-
     /* convert an Esri Simple Marker Symbol */
+
   }, {
     key: '_convertEsriSMS',
     value: function _convertEsriSMS(symbol) {
@@ -448,7 +447,7 @@ var StyleGenerator = (function () {
       });
       var stroke = symbol.outline ? StyleGenerator._convertOutline(symbol.outline) : undefined;
       var radius = StyleGenerator._convertPointToPixel(symbol.size) / 2;
-      var rotation = _Util2['default'].isDefinedAndNotNull(symbol.angle) ? StyleGenerator._transformAngle(symbol.angle) : undefined;
+      var rotation = _Util2.default.isDefinedAndNotNull(symbol.angle) ? StyleGenerator._transformAngle(symbol.angle) : undefined;
       if (symbol.style === 'esriSMSCircle') {
         return new ol.style.Style({
           image: new ol.style.Circle({
@@ -520,16 +519,15 @@ var StyleGenerator = (function () {
   return StyleGenerator;
 })();
 
-exports['default'] = StyleGenerator;
-module.exports = exports['default'];
+exports.default = StyleGenerator;
 
 },{"./Util":3}],3:[function(_dereq_,module,exports){
-/* global ol */
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+/* global ol */
 var utils = {
   isDefinedAndNotNull: function isDefinedAndNotNull(value) {
     return value !== undefined && value !== null;
@@ -542,21 +540,16 @@ var utils = {
   }
 };
 
-exports["default"] = utils;
-module.exports = exports["default"];
+exports.default = utils;
 
 },{}],4:[function(_dereq_,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var _StyleGenerator = _dereq_('./StyleGenerator');
 
@@ -566,6 +559,10 @@ var _Util = _dereq_('./Util');
 
 var _Util2 = _interopRequireDefault(_Util);
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 var VectorLayerModifier = (function () {
   function VectorLayerModifier() {
     _classCallCheck(this, VectorLayerModifier);
@@ -574,18 +571,18 @@ var VectorLayerModifier = (function () {
   _createClass(VectorLayerModifier, null, [{
     key: 'modifyLayer',
     value: function modifyLayer(layerInfo, layer, mapProjection) {
-      var styleGenerator = new _StyleGenerator2['default']();
+      var styleGenerator = new _StyleGenerator2.default();
       var transparency = layerInfo.drawingInfo.transparency;
-      if (_Util2['default'].isDefinedAndNotNull(transparency)) {
+      if (_Util2.default.isDefinedAndNotNull(transparency)) {
         layer.setOpacity((100 - transparency) / 100);
       }
       var mapUnits = mapProjection.getUnits();
       layer.setStyle(styleGenerator.generateStyle(layerInfo, mapUnits));
       if (layerInfo.minScale) {
-        layer.setMaxResolution(_Util2['default'].getResolutionForScale(layerInfo.minScale, mapUnits));
+        layer.setMaxResolution(_Util2.default.getResolutionForScale(layerInfo.minScale, mapUnits));
       }
       if (layerInfo.maxScale) {
-        layer.setMinResolution(_Util2['default'].getResolutionForScale(layerInfo.maxScale, mapUnits));
+        layer.setMinResolution(_Util2.default.getResolutionForScale(layerInfo.maxScale, mapUnits));
       }
     }
   }]);
@@ -593,19 +590,10 @@ var VectorLayerModifier = (function () {
   return VectorLayerModifier;
 })();
 
-exports['default'] = VectorLayerModifier;
-module.exports = exports['default'];
+exports.default = VectorLayerModifier;
 
 },{"./StyleGenerator":2,"./Util":3}],5:[function(_dereq_,module,exports){
-/*
-** Olé - Integration of OpenLayers 3 and Esri ArcGIS REST services
-** Copyright 2015 Boundless Spatial, Inc.
-** License: https://raw.githubusercontent.com/boundlessgeo/ole/master/LICENSE
-** Version: v0.5.0
-*/
 'use strict';
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _LayerGenerator = _dereq_('./LayerGenerator');
 
@@ -619,11 +607,18 @@ var _VectorLayerModifier = _dereq_('./VectorLayerModifier');
 
 var _VectorLayerModifier2 = _interopRequireDefault(_VectorLayerModifier);
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 module.exports = {
-  LayerGenerator: _LayerGenerator2['default'],
-  StyleGenerator: _StyleGenerator2['default'],
-  VectorLayerModifier: _VectorLayerModifier2['default']
-};
+  LayerGenerator: _LayerGenerator2.default,
+  StyleGenerator: _StyleGenerator2.default,
+  VectorLayerModifier: _VectorLayerModifier2.default
+}; /*
+   ** Olé - Integration of OpenLayers 3 and Esri ArcGIS REST services
+   ** Copyright 2015 Boundless Spatial, Inc.
+   ** License: https://raw.githubusercontent.com/boundlessgeo/ole/master/LICENSE
+   ** Version: v0.6.0
+   */
 
 },{"./LayerGenerator":1,"./StyleGenerator":2,"./VectorLayerModifier":4}]},{},[5])(5)
 });
