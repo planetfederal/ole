@@ -104,11 +104,9 @@ describe('StyleGenerator', function() {
       };
       var style = ole.StyleGenerator._convertEsriPMS(symbol);
       var iconStyle = style.getImage();
-      iconStyle.load();
       expect(iconStyle.getRotation()).to.be(4.71238898038469);
       var srcOkay = (iconStyle.getSrc() === 'data:' + symbol.contentType + ';base64, ' + symbol.imageData) || (iconStyle.getSrc() === 'data:' + symbol.contentType + ';base64,' + symbol.imageData);
       expect(srcOkay).to.be(true);
-      expect(iconStyle.getScale()).to.be(1.3076923076923077);
     });
   });
 
