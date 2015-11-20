@@ -26,7 +26,7 @@ Provides the following functionality:
 
 There is no package on npmjs.com but you can use a git type url for instance:
     "dependencies": {
-      "ole": "boundlessgeo/ole#v0.4.0"
+      "ole": "boundlessgeo/ole#v0.6.1"
     }
 
 ## What is supported?
