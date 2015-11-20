@@ -13,6 +13,9 @@
   <script src="../node_modules/openlayers/dist/ol.js"></script>
   <script src="../dist/ole.js"></script>
   <script>
+    if (typeof initMochaPhantomJS === 'function') {
+      initMochaPhantomJS()
+    }
     mocha.setup({
       ui: 'bdd',
       bail: false
@@ -22,26 +25,21 @@
   <script src="./test-helper-functions.js"></script>
   <script src="./load-tests.js"></script>
   <script>
-
-    if (window.mochaPhantomJS) {
-      mochaPhantomJS.run();
-    } else {
-      var runner = mocha.run();
-      if (window.console && console.log) {
-        // write stacks to the console for failed tests
-        runner.on('fail', function(test, err) {
-          if (test.duration > test._timeout) {
-            var titles = [];
-            for (var p = test; p; p = p.parent) {
-              if (p.title) {
-                titles.unshift(p.title);
-              }
+    var runner = mocha.run();
+    if (window.console && console.log) {
+      // write stacks to the console for failed tests
+      runner.on('fail', function(test, err) {
+        if (test.duration > test._timeout) {
+          var titles = [];
+          for (var p = test; p; p = p.parent) {
+            if (p.title) {
+              titles.unshift(p.title);
             }
-            console.log('Test timed out:', titles.join(' > '));
           }
-          console.error(test.err.stack);
-        });
-      }
+          console.log('Test timed out:', titles.join(' > '));
+        }
+        console.error(test.err.stack);
+      });
     }
   </script>
   <!--

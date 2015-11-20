@@ -1,5 +1,5 @@
 function itNoPhantom() {
-  if (window.mochaPhantomJS) {
+  if (window.checkForMocha) {
     return xit.apply(this, arguments);
   } else {
     return it.apply(this, arguments);
