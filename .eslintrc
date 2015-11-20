@@ -8,8 +8,8 @@
     "es6": true
   },
   "rules": {
-    "no-loop-func": false,
-    "no-underscore-dangle": false,
+    "no-loop-func": 0,
+    "no-underscore-dangle": 0,
     "strict": [2, "never"],
     "indent": [2, 2],
     "quotes": [2, "single"]
