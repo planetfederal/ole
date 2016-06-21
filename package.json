@@ -29,10 +29,8 @@
     "url": "https://github.com/boundlessgeo/ole/issues"
   },
   "homepage": "https://github.com/boundlessgeo/ole",
-  "dependencies": {
-    "babelify": "7.2.0"
-  },
   "devDependencies": {
+    "babelify": "7.2.0",
     "babel-preset-es2015": "^6.1.18",
     "browserify": "12.0.1",
     "browserify-derequire": "0.9.4",
