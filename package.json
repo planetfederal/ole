@@ -1,6 +1,6 @@
 {
   "name": "ole",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Library to integrate OpenLayers 3 with Esri ArcGIS Server REST API",
   "main": "dist/ole.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "start:server": "node_modules/.bin/st -nc",
     "start": "node_modules/.bin/npm-run-all --parallel start:ole start:server",
     "build:min": "node_modules/.bin/browserify -p browserify-header -p browserify-derequire -t babelify -p [minifyify --no-map] src/index.js --standalone ole -o dist/ole.js",
-    "build:debug": "node_modules/.bin/browserify -p browserify-header -p browserify-derequire src/index.js --standalone ole -o dist/ole-debug.js",
+    "build:debug": "node_modules/.bin/browserify -p browserify-header -p browserify-derequire -t babelify src/index.js --standalone ole -o dist/ole-debug.js",
     "build": "node_modules/.bin/npm-run-all --parallel build:min build:debug",
     "lint": "node_modules/.bin/eslint src",
     "test": "node_modules/.bin/phantomjs node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js test/index.html"
@@ -46,10 +46,5 @@
     "phantomjs": "1.9.1 - 1.9.7-15",
     "st": "1.0.0",
     "watchify": "3.6.1"
-  },
-  "browserify": {
-    "transform": [
-      "babelify"
-    ]
   }
 }

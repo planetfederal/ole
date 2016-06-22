@@ -1,8 +1,8 @@
 /*
 ** Olé - Integration of OpenLayers 3 and Esri ArcGIS REST services
-** Copyright 2015 Boundless Spatial, Inc.
+** Copyright 2015-present Boundless Spatial, Inc.
 ** License: https://raw.githubusercontent.com/boundlessgeo/ole/master/LICENSE
-** Version: v0.6.1
+** Version: v0.6.2
 */
 import LayerGenerator from './LayerGenerator';
 import StyleGenerator from './StyleGenerator';
