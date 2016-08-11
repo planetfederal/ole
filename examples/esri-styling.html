@@ -12,7 +12,8 @@
 
 <div class="row-fluid">
   <div class="span12">
-    <input id="service-url" value="https://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Drive%20from%20Salt%20and%20Straw_Points%20(5%2010%2015%20Minutes)/FeatureServer/" style="width:800px"></input>
+    <label for="service-url">Url</label><input id="service-url" value="https://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Drive%20from%20Salt%20and%20Straw_Points%20(5%2010%2015%20Minutes)/FeatureServer" style="width:800px"></input>
+    <label for="layer-id">Layer</label><input id="layer-id" value="0"></input>
     <button id="connect">Connect</button>
     <div id="map" class="map"></div>
   </div>
@@ -41,11 +42,11 @@
 
   document.getElementById('connect').addEventListener('click', function() {
     var serviceUrl = document.getElementById('service-url').value;
-    var layer = '0';
+    var layer = document.getElementById('layer-id').value;
     var esrijsonFormat = new ol.format.EsriJSON();
     var vectorSource = new ol.source.Vector({
       loader: function(extent, resolution, projection) {
-        var url = serviceUrl + layer + '/query/?f=json&' +
+        var url = serviceUrl + '/' + layer + '/query/?f=json&' +
           'returnGeometry=true&spatialRel=esriSpatialRelIntersects&geometry=' +
           encodeURIComponent('{"xmin":' + extent[0] + ',"ymin":' +
             extent[1] + ',"xmax":' + extent[2] + ',"ymax":' + extent[3] +
@@ -74,21 +75,26 @@
     var vector = new ol.layer.Vector({
       source: vectorSource
     });
-    var styleUrl = serviceUrl + layer + '?f=json';
+    var styleUrl = serviceUrl + '/' + layer + '?f=json';
     $.ajax({url: styleUrl, dataType: 'jsonp', success: function(response) {
-      var srs = response.extent.spatialReference.wkid;
-      var extent = [response.extent.xmin, response.extent.ymin, response.extent.xmax, response.extent.ymax];
-      if (srs === 4267) {
-        extent = ol.proj.get('EPSG:3857').getExtent();
-      }
-      map.getView().fit(extent, map.getSize());
-      ole.VectorLayerModifier.modifyLayer(response, vector, map.getView().getProjection());
-      map.getLayers().forEach(function(lyr) {
-        if (lyr instanceof ol.layer.Vector) {
-          map.removeLayer(lyr);
+      if (response.error) {
+        alert(response.error.message + '\n' +
+          response.error.details.join('\n'));
+      } else {
+        var srs = response.extent.spatialReference.wkid;
+        var extent = [response.extent.xmin, response.extent.ymin, response.extent.xmax, response.extent.ymax];
+        if (srs === 4267) {
+          extent = ol.proj.get('EPSG:3857').getExtent();
         }
-      });
-      map.addLayer(vector);
+        map.getView().fit(extent, map.getSize());
+        ole.VectorLayerModifier.modifyLayer(response, vector, map.getView().getProjection());
+        map.getLayers().forEach(function(lyr) {
+          if (lyr instanceof ol.layer.Vector) {
+            map.removeLayer(lyr);
+          }
+        });
+        map.addLayer(vector);
+      }
     }});
   });
 </script>
